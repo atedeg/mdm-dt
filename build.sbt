@@ -9,10 +9,6 @@ ThisBuild / versionScheme := Some("early-semver")
 
 ThisBuild / Docker / dockerUsername := Some("atedeg")
 
-ThisBuild / ubidoc / targetDirectory := baseDirectory.value / "_includes"
-ThisBuild / ubidoc / lookupDirectory := target.value / "site"
-ThisBuild / ubidoc / linkSolver := (link => s"../../../$link")
-
 ThisBuild / developers := List(
   Developer(
     "giacomocavalieri",
@@ -92,26 +88,11 @@ addCommandAlias("qaCheck", "scalafmtCheckAll; scalafixAll --check; wartremoverIn
 
 lazy val root = project
   .in(file("."))
-  .enablePlugins(ScalaUnidocPlugin)
   .settings(
     name := "mdm",
     sonatypeCredentialHost := "s01.oss.sonatype.org",
     sonatypeRepository := "https://s01.oss.sonatype.org/service/local",
     sonatypeProfileName := "dev.atedeg",
-    ScalaUnidoc / unidoc / target := file("target/site"),
-    Compile / doc / scalacOptions := Seq(
-      "-Ygenerate-inkuire",
-      "-project",
-      "MDM - Mambelli Domain Model",
-      "-project-version",
-      version.value,
-      "-project-footer",
-      "Made with ❤ by Giacomo, Nicolas, Nicolò, Linda",
-      "-siteroot",
-      "docs/",
-      "-doc-root-content",
-      "docs/api.md",
-    ),
     jacocoAggregateReportSettings := JacocoReportSettings(
       title = "mdm coverage report",
       formats = Seq(JacocoReportFormats.XML),
