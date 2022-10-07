@@ -53,7 +53,7 @@ val commonSettings = Seq(
     "org.scalactic" %% "scalactic" % scalaTestVersion,
     "org.scalatest" %% "scalatest" % scalaTestVersion % "test",
     "org.scalatest" %% "scalatest-propspec" % "3.2.14" % "test",
-    "org.scalatestplus" %% "scalacheck-1-16" % "3.2.13.0" % "test",
+    "org.scalatestplus" %% "scalacheck-1-16" % "3.2.14.0" % "test",
     "eu.timepit" %% "refined" % "0.10.1",
     "org.typelevel" %% "cats-core" % "2.8.0",
     "org.typelevel" %% "cats-mtl" % "1.3.0",
