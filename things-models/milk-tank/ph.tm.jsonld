@@ -1,0 +1,48 @@
+{
+  "@context": [
+    "https://www.w3.org/2022/wot/td/v1.1",
+    {
+      "om2": "http://www.ontology-of-units-of-measure.org/resource/om-2/"
+    }
+  ],
+  "@type": "tm:ThingModel",
+  "title": "pH Measurement",
+  "version": {
+    "model": "1.0.0"
+  },
+  "tm:optional": [],
+  "properties": {
+    "reportPh": {
+      "title": "Report the pH value",
+      "description": "Configuration whether the current pH should be published.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "title": "Reporting enabled",
+          "type": "boolean",
+          "default": false
+        },
+        "interval": {
+          "@type": "time:Duration",
+          "title": "Reporting interval",
+          "type": "integer",
+          "unit": "time:seconds",
+          "default": 30
+        }
+      }
+    }
+  },
+  "events": {
+    "current-ph": {
+      "title": "Current pH",
+      "description": "Measurement of the current pH value.",
+      "data": {
+        "@type": "om2:Power",
+        "title": "PH value",
+        "type": "number",
+        "unit": "om2:kilowatt",
+        "minimum": 0.0
+      }
+    }
+  }
+}
