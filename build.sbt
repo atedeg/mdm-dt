@@ -58,7 +58,7 @@ val commonSettings = Seq(
     "org.typelevel" %% "cats-core" % "2.8.0",
     "org.typelevel" %% "cats-mtl" % "1.3.0",
     "org.typelevel" %% "cats-effect" % "3.4-389-3862cf0",
-    "org.typelevel" %% "shapeless3-deriving" % "3.1.0",
+    "org.typelevel" %% "shapeless3-deriving" % "3.2.0",
     "org.http4s" %% "http4s-blaze-server" % "0.23.12",
     "org.http4s" %% "http4s-circe" % "0.23.16",
     "org.http4s" %% "http4s-dsl" % "0.23.16",
