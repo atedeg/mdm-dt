@@ -10,6 +10,7 @@ on:
 
 jobs:
   wartremover:
+    if: ${{false}}
     name: Wartremover lint
     runs-on: ubuntu-22.04
     steps:
