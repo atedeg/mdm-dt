@@ -1,0 +1,48 @@
+{
+  "@context": [
+    "https://www.w3.org/2022/wot/td/v1.1",
+    {
+      "om2": "http://www.ontology-of-units-of-measure.org/resource/om-2/"
+    }
+  ],
+  "@type": "tm:ThingModel",
+  "title": "Temperature measurement",
+  "version": {
+    "model": "1.0.0"
+  },
+  "tm:optional": [],
+  "properties": {
+    "reportTemperature": {
+      "title": "Report the temperature",
+      "description": "Configuration whether the current temperature should be published.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "title": "Reporting enabled",
+          "type": "boolean",
+          "default": false
+        },
+        "interval": {
+          "@type": "time:Duration",
+          "title": "Reporting interval",
+          "type": "integer",
+          "unit": "time:seconds",
+          "default": 30
+        }
+      }
+    }
+  },
+  "events": {
+    "current-temperature": {
+      "title": "Current temperature",
+      "description": "Measurement of the current temeprature value.",
+      "data": {
+        "@type": "om2:Temperature",
+        "title": "Temperature value",
+        "type": "number",
+        "unit": "om2:CelsiusTemperature",
+        "minimum": 0.0
+      }
+    }
+  }
+}

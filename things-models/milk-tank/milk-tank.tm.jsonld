@@ -1,0 +1,49 @@
+{
+  "@context": [
+    "https://www.w3.org/2022/wot/td/v1.1",
+    {
+      "om2": "http://www.ontology-of-units-of-measure.org/resource/om-2/",
+      "time": "http://www.w3.org/2006/time#"
+    }
+  ],
+  "@type": "tm:ThingModel",
+  "title": "Milk Tank",
+  "description": "A smart milk tank with temperature and pH sensors and a smart valve to open/close to.",
+  "version": {
+    "model": "1.0.0"
+  },
+  "tm:optional": [],
+  "links":[
+      {
+      "rel": "tm:submodel",
+      "href": "https://gist.githubusercontent.com/nicolasfara/ef68d91276603d674cb3862ac0ff73ac/raw/8b25f73b4e0e7eee81f1134a63b8bfe17b68260d/ph.tm.jsonld",
+      "type": "application/tm+json",
+      "instanceName": "pH"
+    },
+    {
+      "rel": "tm:submodel",
+      "href": "https://gist.githubusercontent.com/nicolasfara/4bd5a191637c25a2d882852c5e84b6f4/raw/a971f71af1cc37beba17919b376b4725bac84800/temperature.tm.jsonld",
+      "type": "application/tm+json",
+      "instanceName": "Temperature"
+    }
+  ],
+  "properties": {
+    "manufacturer": {
+      "title": "Manufacturer",
+      "type": "string",
+      "readOnly": true
+    },
+    "serialNo": {
+      "title": "Serial number",
+      "type": "string",
+      "readOnly": true
+    }
+  },
+  "actions": {
+    "open-valve": {
+      "title": "Open the tank's valve",
+      "description": "Open (or close) the tank's valve based on the passed in boolean.",
+      "type": "boolean"
+    }
+  }
+}
