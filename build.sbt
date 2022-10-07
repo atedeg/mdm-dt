@@ -1,5 +1,5 @@
 val scala3Version = "3.1.3"
-val scalaTestVersion = "3.2.13"
+val scalaTestVersion = "3.2.14"
 
 ThisBuild / scalaVersion := scala3Version
 ThisBuild / organization := "dev.atedeg.mdm"
