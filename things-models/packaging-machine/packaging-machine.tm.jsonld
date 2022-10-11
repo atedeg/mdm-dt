@@ -1,0 +1,81 @@
+{
+    "@context": [
+      "https://www.w3.org/2019/wot/td/v1"
+      ],
+    "title": "Packaging Machine",
+    "@type": "tm:ThingModel",
+    "description": "A smart packaging machine that gives information about the current batch, the cutter temperature and emits events for the packaging start, machine failure and package damage.\nAlso, provides the \"start packaging\" action.",
+    "securityDefinitions": {
+      "nosec_sc": {
+        "scheme": "nosec"
+      }
+    },
+    "security": "nosec_sc",
+      "links":[
+        {
+        "rel": "tm:submodel",
+        "href": "https://raw.githubusercontent.com/atedeg/mdm-dt/main/things-models/temperature.tm.jsonld",
+        "type": "application/tm+json",
+        "instanceName": "cutterTemperature"
+      }
+    ],
+    "properties": {
+      "manufacturer": {
+        "title": "Manufacturer",
+        "observable": false,
+        "readOnly": true,
+        "type": "string",
+        "forms": []
+      },
+      "serialNo": {
+        "title": "Serial number",
+        "type": "string",
+        "readOnly": true
+      },
+      "currentBatch": {
+        "title": "Current Batch",
+        "type": "string",
+        "readOnly": true
+      }
+    },
+    "actions": {
+        "start-packaging": {
+            "title": "Start Packaging",
+            "description": "Start (or stop) the packaging machine based on the boolean value",
+            "type": "boolean"
+        }
+    },
+    "events": {
+      "packaging-started": {
+        "title": "Packaging Started",
+        "description": "Report that the packaging machine has started",
+        "data": {
+          "@type": "Boolean",
+          "title": "Packaging Started",
+          "type": "boolean",
+          "unit": ""
+        },
+        "forms": []
+      },
+      "packagingMachine-failure": {
+        "title": "Packaging machine failure",
+        "description": "Report a packaging machine failure",
+        "data": {
+          "@type": "Object",
+          "title": "Packaging Machine Failure",
+          "type": "object",
+          "unit": ""
+        }
+      },
+      "package-damaged": {
+        "title": "Package damaged",
+        "description": "Report that a package has been damaged",
+        "data": {
+          "@type": "Object",
+          "title": "Package Damaged",
+          "type": "object",
+          "unit": ""
+        }
+      }
+    }
+  }
