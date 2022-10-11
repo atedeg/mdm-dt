@@ -33,7 +33,7 @@
   "events": {
     "dropped-packages": {
         "title": "The dropped packages",
-        "description": "Is raised when a batch is completed but some packages failed the QA process.",
+        "description": "Is raised when a batch is completed but some packages fail the check.",
         "type": "object",
         "properties": {
             "batch-id": { "type": "string" },
