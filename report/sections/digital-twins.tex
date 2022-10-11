@@ -1,0 +1,46 @@
+\chapter{Digital Twins description}
+
+\section{Digital twins for machines}
+\subsection{Milk Tank}
+\subsubsection{Thing Model}
+Properties: Manufacturer, Serial number, pH, minPH, maxPH, temperature, minTemp, maxTemp, quantityOfmilk
+Events: temperatureOutOfRange, pHoutOfRange
+Actions: Open Valve
+
+\section{Digital twins for anticipazione guasti}
+\subsection{Packaging machine}
+\subsubsection{Thing Model}
+Properties: Manufacturer, Serial number, currentBatch, cutterTemperature
+Events: packagingStarted, packagingMachineFailure, packageDamaged,
+Action: startPackaging
+
+% cutterTemperature viene passato all'algoritmo che in caso di packagingMachineFailure o packageDamaged poi vede che magari la temperatura era troppo alta e capisce qual era il problema
+
+riceve le info su quale lotto deve iniziare a confezionare così da impostare automaticamente i parametri della macchina.
+tramite algoritmo di machine learning, la macchina predice il guasto e lo comunica tramite alert.
+I parametri che valuta sono: numero di chiusure al minuto per tipo di prodotto, numero di confezioni danneggiate, temperatura resistenza saldatore (cutter).
+
+\section{Digital twins for quality assurance}
+DT a livello di processo. Quello per la QA(metal detector e scale) viene creato e distrutto all'interno di un ciclo di valutazione di un lotto.
+Si collega ai DT del metal detector e della bilancia per effettuare la QA.
+\subsection{Metal detector}
+\subsubsection{Thing Model}
+Properties: Manufacturer, Serial number, currentBatch
+Events: numberOfDroppedPackages
+
+Rifiuta il batch se almeno un prodotto viene rilevato come non conforme, altrimenti invia il batch al successivo step.
+I parametri sono:
+numero di prodotti rilevati come non conformi appartenenti ad un determinato lotto
+
+\subsection{Scale}
+% facciamo un capitolo "Motivazioni" dove descriviamo tutti questi scenari che giustificano l'inserimento di un DT. 
+% Esempio nel caso della bilancia, scenario:
+% con il tempo si osserva che un determinato prodotto inizia ad avere mediamente un peso maggiore o inferiore rispetto al peso di riferimento. Questo potrebbe essere sintomo di una problematica nel confezionamento (es. formine deformate).
+
+\subsubsection{Thing Model}
+Properties: Manufacturer, Serial number, currentBatch, meanWeight, stdDevWeight
+Events: numberOfDroppedPackages, batchCompleted
+
+Approva in automatico il batch se tutti i prodotti vanno bene, altrimenti rifiuta tutto il batch obbligando l'operatore ad intervenire manualmente.
+I parametri sono:
+per ogni lotto il numero di confezioni pesate, il numero di confezioni che superano il peso minimo e il numero di confezioni che superano il peso massimo, il peso medio per lotto, la deviazione standard per lotto

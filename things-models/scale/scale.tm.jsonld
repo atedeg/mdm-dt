@@ -1,0 +1,66 @@
+{
+    "@context": [
+      "https://www.w3.org/2022/wot/td/v1.1",
+      {
+        "om2": "http://www.ontology-of-units-of-measure.org/resource/om-2/",
+        "time": "http://www.w3.org/2006/time#"
+      }
+    ],
+    "@type": "tm:ThingModel",
+    "title": "Scale",
+    "description": "A smart scale useful for quality assurance that emits numberOfDroppedPackages, batchCompleted events and has currentBatch, meanWeight, stdDevWeight as properties",
+    "version": {
+      "model": "1.0.0"
+    },
+    "tm:optional": [],
+    "links":[],
+    "properties": {
+      "manufacturer": {
+        "title": "Manufacturer",
+        "type": "string",
+        "readOnly": true
+      },
+      "serialNo": {
+        "title": "Serial number",
+        "type": "string",
+        "readOnly": true
+      },
+      "currentBatch": {
+        "title": "Current Batch",
+        "type": "string",
+        "readOnly": true
+      },
+      "meanWeight": {
+        "title": "Mean weight",
+        "type": "number",
+        "readOnly": true
+      },
+      "stdDevWeight": {
+        "title": "Standard deviation weight",
+        "type": "number",
+        "readOnly": true
+      }
+    },
+    "events": {
+      "numberOfDroppedPackages": {
+       "title": "Report the number of dropped packages" ,
+        "description": "Report the number of too much eavy/light packages that are dropped",
+        "data": {
+          "@type": "om2:Quantity",
+          "title": "Number of packages",
+          "type": "number",
+          "unit": "om2:Quantity"
+        }
+      },
+      "batchCompleted": {
+        "title": "Batch is completed",
+        "description": "Report that the scaling of a batch has been completed",
+        "data": {
+          "@type": "Boolean",
+          "title": "True if the batch has been completed",
+          "type": "boolean",
+          "unit": ""        
+        }
+      }
+    }
+  }
