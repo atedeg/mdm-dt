@@ -13,7 +13,6 @@
     "model": "1.0.0"
   },
   "tm:optional": [],
-  "links":[],
   "properties": {
     "manufacturer": {
       "title": "Manufacturer",
