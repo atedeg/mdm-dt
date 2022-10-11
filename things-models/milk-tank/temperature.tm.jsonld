@@ -12,30 +12,26 @@
   },
   "tm:optional": [],
   "properties": {
-    "reportTemperature": {
-      "title": "Report the temperature",
-      "description": "Configuration whether the current temperature should be published.",
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "title": "Reporting enabled",
-          "type": "boolean",
-          "default": false
+        "temperature": {
+            "title": "Temperature value",
+            "description": "The tempearature value in real-time.",
+            "type": "number"
         },
-        "interval": {
-          "@type": "time:Duration",
-          "title": "Reporting interval",
-          "type": "integer",
-          "unit": "time:seconds",
-          "default": 30
+        "min-temp": {
+            "title": "Minimun Temperature value accepted",
+            "description": "The minimum accepted temperature.",
+            "type": "number"
+        },
+        "max-temp": {
+            "title": "Maximum Temperature value accepted",
+            "description": "The maximum accepted tempearature.",
+            "type": "number"
         }
-      }
-    }
   },
   "events": {
-    "current-temperature": {
-      "title": "Current temperature",
-      "description": "Measurement of the current temeprature value.",
+    "temperature-out-of-range": {
+      "title": "Alarm for temperature out of range",
+      "description": "Trigger an alarm if the temperature is out of range.",
       "data": {
         "@type": "om2:Temperature",
         "title": "Temperature value",
