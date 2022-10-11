@@ -15,8 +15,8 @@
     "tm:optional": [],
     "links":[],
     "properties": {
-      "manufacturer": {
-        "title": "Manufacturer",
+      "manufacturerrrr": {
+        "title": "Manufacturerrrr",
         "type": "string",
         "readOnly": true
       },
