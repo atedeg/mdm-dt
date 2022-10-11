@@ -1,0 +1,44 @@
+{
+  "@context": [
+    "https://www.w3.org/2022/wot/td/v1.1",
+    {
+      "om2": "http://www.ontology-of-units-of-measure.org/resource/om-2/",
+      "time": "http://www.w3.org/2006/time#"
+    }
+  ],
+  "@type": "tm:ThingModel",
+  "title": "Metal Detector",
+  "description": "A smart metal detector.",
+  "version": {
+    "model": "1.0.0"
+  },
+  "tm:optional": [],
+  "links":[],
+  "properties": {
+    "manufacturer": {
+      "title": "Manufacturer",
+      "type": "string",
+      "readOnly": true
+    },
+    "serialNo": {
+      "title": "Serial number",
+      "type": "string",
+      "readOnly": true
+    },
+    "currentBatch": {
+        "title": "The current batch",
+        "type": "string"
+    }
+  },
+  "events": {
+    "dropped-packages": {
+        "title": "The dropped packages",
+        "description": "Is raised when a batch is completed but some packages failed the QA process.",
+        "type": "object",
+        "properties": {
+            "batch-id": { "type": "string" },
+            "dropped-packages": { "type": "integer" }
+        }
+    }
+  }
+}
