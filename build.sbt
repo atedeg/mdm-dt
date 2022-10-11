@@ -57,11 +57,12 @@ val commonSettings = Seq(
     "eu.timepit" %% "refined" % "0.10.1",
     "org.typelevel" %% "cats-core" % "2.8.0",
     "org.typelevel" %% "cats-mtl" % "1.3.0",
-    "org.typelevel" %% "cats-effect" % "3.4-389-3862cf0",
+    "org.typelevel" %% "cats-effect" % "3.3.12",
     "org.typelevel" %% "shapeless3-deriving" % "3.2.0",
     "org.http4s" %% "http4s-blaze-server" % "0.23.12",
     "org.http4s" %% "http4s-circe" % "0.23.16",
     "org.http4s" %% "http4s-dsl" % "0.23.16",
+    "org.http4s" %% "http4s-blaze-client" % "0.23.16",
     "io.circe" %% "circe-generic" % "0.14.3",
     "io.circe" %% "circe-core" % "0.14.3",
     "io.circe" %% "circe-generic" % "0.14.3",
@@ -69,6 +70,7 @@ val commonSettings = Seq(
     "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % "1.0.6",
     "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % "1.0.6",
     "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % "1.0.6",
+    "com.softwaremill.sttp.tapir" %% "tapir-http4s-client" % "1.0.6",
     "org.typelevel" %% "log4cats-core" % "2.5.0",
     "org.typelevel" %% "log4cats-slf4j" % "2.5.0",
     "org.slf4j" % "slf4j-api" % "2.0.3",
@@ -194,3 +196,10 @@ lazy val pricing = project
     dockerExposedPorts := Seq(8080),
   )
   .dependsOn(utils, `products-shared-kernel`)
+
+lazy val `alarm-manager` = project
+  .enablePlugins(DockerPlugin, JavaAppPackaging)
+  .in(file("alarm-manager"))
+  .settings(commonSettings)
+  .settings(commonDockerSettings)
+  .dependsOn(utils)
