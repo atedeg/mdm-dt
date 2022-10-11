@@ -12,35 +12,33 @@
   },
   "tm:optional": [],
   "properties": {
-    "reportPh": {
-      "title": "Report the pH value",
-      "description": "Configuration whether the current pH should be published.",
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "title": "Reporting enabled",
-          "type": "boolean",
-          "default": false
+        "pH": {
+            "title": "pH Value",
+            "description": "The value of pH in real-time",
+            "type": "number"
         },
-        "interval": {
-          "@type": "time:Duration",
-          "title": "Reporting interval",
-          "type": "integer",
-          "unit": "time:seconds",
-          "default": 30
+        "min-pH": {
+            "title": "Minimum accepted pH",
+            "description": "The minimum accepted pH value.",
+            "type": "number",
+            "minimum": 0.0 
+        },
+        "max-pH": {
+            "title": "Maximum accepted pH",
+            "description": "The maximum accepted pH value.",
+            "type": "number",
+            "minimum": 0.0 
         }
-      }
-    }
   },
   "events": {
-    "current-ph": {
-      "title": "Current pH",
-      "description": "Measurement of the current pH value.",
+    "ph-out-of-range": {
+      "title": "Alarm for pH out of range",
+      "description": "Trigger an alarm if the pH is out of range.",
       "data": {
-        "@type": "om2:Power",
+        "@type": "om2:Quantity",
         "title": "PH value",
         "type": "number",
-        "unit": "om2:kilowatt",
+        "unit": "om2:Quantity",
         "minimum": 0.0
       }
     }

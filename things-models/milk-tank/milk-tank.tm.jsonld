@@ -16,13 +16,13 @@
   "links":[
       {
       "rel": "tm:submodel",
-      "href": "https://gist.githubusercontent.com/nicolasfara/ef68d91276603d674cb3862ac0ff73ac/raw/8b25f73b4e0e7eee81f1134a63b8bfe17b68260d/ph.tm.jsonld",
+      "href": "https://raw.githubusercontent.com/atedeg/mdm-dt/main/things-models/milk-tank/ph.tm.jsonld",
       "type": "application/tm+json",
       "instanceName": "pH"
     },
     {
       "rel": "tm:submodel",
-      "href": "https://gist.githubusercontent.com/nicolasfara/4bd5a191637c25a2d882852c5e84b6f4/raw/a971f71af1cc37beba17919b376b4725bac84800/temperature.tm.jsonld",
+      "href": "https://raw.githubusercontent.com/atedeg/mdm-dt/main/things-models/milk-tank/temperature.tm.jsonld",
       "type": "application/tm+json",
       "instanceName": "Temperature"
     }
