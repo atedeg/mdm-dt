@@ -13,8 +13,8 @@
     "model": "1.0.0"
   },
   "tm:optional": [],
-  "links":[
-      {
+  "links": [
+    {
       "rel": "tm:submodel",
       "href": "https://raw.githubusercontent.com/atedeg/mdm-dt/main/things-models/milk-tank/ph.tm.jsonld",
       "type": "application/tm+json",
@@ -35,6 +35,12 @@
     },
     "serialNo": {
       "title": "Serial number",
+      "type": "string",
+      "readOnly": true
+    },
+    "availableMilk": {
+      "title": "Available milk in the tank",
+      "description": "The quintals of milk available in the tank",
       "type": "string",
       "readOnly": true
     }
