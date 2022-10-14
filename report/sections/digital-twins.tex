@@ -19,7 +19,9 @@ Actions: Open Valve
 \subsection{Packaging machine}
 \subsubsection{Thing Model}
 Properties: Manufacturer, Serial number, currentBatch, cutterTemperature
+
 Events: packagingStarted, packagingMachineFailure, packageDamaged,
+
 Action: startPackaging
 
 % cutterTemperature viene passato all'algoritmo che in caso di packagingMachineFailure o packageDamaged poi vede che magari la temperatura era troppo alta e capisce qual era il problema
@@ -36,7 +38,6 @@ Si collega ai DT del metal detector e della bilancia per effettuare la QA.
 Properties: Manufacturer, Serial number, currentBatch
 Events: numberOfDroppedPackages
 
-Rifiuta il batch se almeno un prodotto viene rilevato come non conforme, altrimenti invia il batch al successivo step.
 I parametri sono:
 numero di prodotti rilevati come non conformi appartenenti ad un determinato lotto
 
@@ -45,6 +46,5 @@ numero di prodotti rilevati come non conformi appartenenti ad un determinato lot
 Properties: Manufacturer, Serial number, currentBatch, meanWeight, stdDevWeight
 Events: numberOfDroppedPackages, batchCompleted
 
-Approva in automatico il batch se tutti i prodotti vanno bene, altrimenti rifiuta tutto il batch obbligando l'operatore ad intervenire manualmente.
 I parametri sono:
-per ogni lotto il numero di confezioni pesate, il numero di confezioni che superano il peso minimo e il numero di confezioni che superano il peso massimo, il peso medio per lotto, la deviazione standard per lotto
+il lotto corrente, il peso medio per lotto, la deviazione standard per lotto
