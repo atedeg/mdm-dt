@@ -14,3 +14,11 @@ final case class PhFailure(timestamp: LocalTime, ph: Ph, device: String)
 
 final case class TemperatureFailureMessage(message: String)
 final case class PhFailureMessage(message: String)
+
+final case class BatchID(id: UUID)
+
+final case class PackagingMachineFailure(timestamp: LocalTime, batchID: BatchID, cutterTemperature: Temperature)
+final case class PackageDamageFailure(timestamp: LocalTime, batchID: BatchID, cutterTemperature: Temperature)
+
+final case class PackagingMachineFailureMessage(message: String)
+final case class PackageDamagdMessage(message: String)

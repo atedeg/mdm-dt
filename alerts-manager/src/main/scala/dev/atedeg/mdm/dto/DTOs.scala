@@ -22,3 +22,13 @@ object TemperatureDTO:
 final case class TemperatureOutOfRangeDTO(temperature: TemperatureDTO, device: String)
 object TemperatureOutOfRangeDTO:
   given DTO[TemperatureOutOfRange, TemperatureOutOfRangeDTO] = productTypeDTO
+
+private given DTO[BatchID, String] = unwrapFieldDTO
+
+final case class PackagingMachineFailureDTO(batchID: String, cutterTemperature: TemperatureDTO)
+object PackagingMachineFailureDTO:
+  given DTO[PackagingMachineFailure, PackagingMachineFailureDTO] = productTypeDTO
+
+final case class PackageDamagedDTO(batchID: String, cutterTemperature: TemperatureDTO)
+object PackageDamagedDTO:
+  given DTO[PackageDamaged, PackageDamagedDTO] = productTypeDTO
