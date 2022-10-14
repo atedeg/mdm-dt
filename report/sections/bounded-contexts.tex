@@ -1,10 +1,11 @@
 \chapter{Bounded Contexts}
+
+
 \section{Milk Planning}
 % TODO: sistemare prevedendo i DT ? 
 Every Saturday Raffaella has to estimate the quintals of milk necessary to produce all products
 for the following week.
 She makes this estimate by taking into account the following factors:
-
 
 \begin{itemize}
     \item the quintals of milk processed in the same period of the previous year
@@ -12,34 +13,34 @@ She makes this estimate by taking into account the following factors:
     (this is made by reading from a recipe book the yield of milk to produce a quintal of a given product)
     \item the current stock
     \item the quintals of milk already in stock
-     
+
 \end{itemize}
-  
+
 After the estimate is complete the restocking B.C. is notified of the result so
 that it can make a milk order
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{p{0.2\textwidth}*{3}{>{\arraybackslash}p{0.8\textwidth}}}
-    \hline
-        Term & Definition \\ \hline
-        Processed milk & The quintals of milk are processed in order to produce cheese. \\ \hline
-        Quintals of milk & A quantity of milk expressed in quintals. \\ \hline
-        Yield & A decimal that represents the yield of milk when producing a given cheese type: i.e. to produce n quintals of a given cheese type, yield of cheese type * n quintals of milk must be used. \\ \hline
-        Recipe book & It defines, for each cheese type, the yield of milk when producing it. \\ \hline
-        Stock & It defines, for each product, the quantity available in stock. \\ \hline
-        Stocked quantity & A quantity of a stocked product, it may also be zero. \\ \hline
-        Quantity & A quantity of something. \\ \hline
-        Requested product & A product requested in a given quantity that has to be produced by the given date. \\ \hline
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term              & Definition                                                                                                                                                                                 \\ \hline
+        Processed milk    & The quintals of milk are processed in order to produce cheese.                                                                                                                             \\ \hline
+        Quintals of milk  & A quantity of milk expressed in quintals.                                                                                                                                                  \\ \hline
+        Yield             & A decimal that represents the yield of milk when producing a given cheese type: i.e. to produce n quintals of a given cheese type, yield of cheese type * n quintals of milk must be used. \\ \hline
+        Recipe book       & It defines, for each cheese type, the yield of milk when producing it.                                                                                                                     \\ \hline
+        Stock             & It defines, for each product, the quantity available in stock.                                                                                                                             \\ \hline
+        Stocked quantity  & A quantity of a stocked product, it may also be zero.                                                                                                                                      \\ \hline
+        Quantity          & A quantity of something.                                                                                                                                                                   \\ \hline
+        Requested product & A product requested in a given quantity that has to be produced by the given date.                                                                                                         \\ \hline
     \end{tabular}
     \caption{Ubiquitous Language}
 \end{table}
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{p{0.2\textwidth}*{3}{>{\arraybackslash}p{0.8\textwidth}}}
-    \hline
-        Event & Description \\ \hline
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Event          & Description                                                                             \\ \hline
         Received order & Event representing an order placed used to estimate the quintals of milk to be ordered. \\ \hline
     \end{tabular}
     \caption{Incoming events}
@@ -47,16 +48,48 @@ that it can make a milk order
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{p{0.2\textwidth}*{3}{>{\arraybackslash}p{0.8\textwidth}}}
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
     \hline
-        Event & Description \\ \hline
+        Event      & Description                                                                                                 \\ \hline
         Order milk & Event to order the quintals of milk needed for the next week. This event is emitted every week on saturday. \\ \hline
     \end{tabular}
     \caption{Outgoing events}
 \end{table}
 
+
 \section{Milk Tank}
-% storiella di cosa è il milk tank
+A milk tank is a machine that stores milk.
+It has a sensor that measures the quantity of milk in the tank as well as temperature and pH value sensors.
+It also has a valve that allows the milk to be pumped out of the tank.
+The tanks send the milk level to Milk Planning B.C. in order to estimate the quintals of milk necessary to produce
+all products for the following week.
+Temperature and pH values are used to analyze the milk quality.
+Every time one of the two values above becomes out of range, a warning is sent to Alerts B.C.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term              & Definition      \\ \hline
+        Milk Tank    & The machine that stores the milk.       \\ \hline
+        Quintals of milk  & A quantity of milk expressed in quintals.  \\ \hline
+        Temperature             & The current temperature of the milk in the tank. \\ \hline
+        PH       & The current pH value of the milk in the tank.      \\ \hline
+    \end{tabular}
+    \caption{Ubiquitous Language}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term               & Definition                                                               \\ \hline
+        Open the Valve    & Fired when the tank's valve needs to be opened.     \\ \hline
+        PH out of range & An event emitted when the pH value is out of the required range. \\ \hline
+        Temperature out of range & An event emitted when the Temperature value is out of the required range. \\ \hline
+    \end{tabular}
+    \caption{Outgoing events}
+\end{table}
 
 \section{Stocking}
 % TODO: sistemare prevedendo i DT ? 
@@ -70,53 +103,58 @@ To label a cheese the worker has to weigh it, and an automated system will print
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{p{0.2\textwidth}*{3}{>{\arraybackslash}p{0.8\textwidth}}}
-    \hline
-        Term & Definition \\ \hline
-        Available stock & The currently available products in stock; each one is available in a certain quantity (that could also be zero if the product is out-of-stock). \\ \hline
-        Desired stock & The desired quantity of each product that should always be in stock in order to have a safe margin to keep order fulfillment going. \\ \hline
-        Available quantity & The quantity in stock of a certain product. \\ \hline
-        Desired quantity & The desired quantity of a certain product to be in stock. \\ \hline
-        Missing quantity & The required quantity of a certain product to reach the desired stock level. \\ \hline
-        Batch & A batch of products of a certain type, uniquely identified by an ID, which hasn't been quality assured. \\ \hline
-        Quality assured batch & A batch of products of a certain type uniquely identified by an ID, which has undergone quality assurance. \\ \hline
-        Labelled product & A product with its respective quantity and the ID of the batch it belongs to. \\ \hline
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term                  & Definition                                                                                                                                       \\ \hline
+        Available stock       & The currently available products in stock; each one is available in a certain quantity (that could also be zero if the product is out-of-stock). \\ \hline
+        Desired stock         & The desired quantity of each product that should always be in stock in order to have a safe margin to keep order fulfillment going.              \\ \hline
+        Available quantity    & The quantity in stock of a certain product.                                                                                                      \\ \hline
+        Desired quantity      & The desired quantity of a certain product to be in stock.                                                                                        \\ \hline
+        Missing quantity      & The required quantity of a certain product to reach the desired stock level.                                                                     \\ \hline
+        Batch                 & A batch of products of a certain type, uniquely identified by an ID, which hasn't been quality assured.                                          \\ \hline
+        Quality assured batch & A batch of products of a certain type uniquely identified by an ID, which has undergone quality assurance.                                       \\ \hline
+        Labelled product      & A product with its respective quantity and the ID of the batch it belongs to.                                                                    \\ \hline
     \end{tabular}
     \caption{Ubiquitous Language}
 \end{table}
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{p{0.2\textwidth}*{3}{>{\arraybackslash}p{0.8\textwidth}}}
-    \hline
-        Term & Definition \\ \hline
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term                              & Definition                                            \\ \hline
         Batch ready for quality assurance & Received when a batch is ready for quality assurance. \\ \hline
-        Product removed from stock & Received when a product is removed from the stock. \\ \hline
-        New batch & Received when a batch is created. \\ \hline
+        Product removed from stock        & Received when a product is removed from the stock.    \\ \hline
+        New batch                         & Received when a batch is created.                     \\ \hline
     \end{tabular}
     \caption{Incoming events}
 \end{table}
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{p{0.2\textwidth}*{3}{>{\arraybackslash}p{0.8\textwidth}}}
-    \hline
-        Term & Definition \\ \hline
-        Product stocked & Fired when a label is printed for a product, which is then stocked. \\ \hline
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term               & Definition                                                               \\ \hline
+        Product stocked    & Fired when a label is printed for a product, which is then stocked.      \\ \hline
         Product palletized & An event emitted when a product is successfully palletized for an order. \\ \hline
     \end{tabular}
     \caption{Outgoing events}
 \end{table}
 
+
 \section{Scale}
 % storiella di cosa è la scale
+
 
 \section{Packaging Machine}
 % storiella di cosa è la packaging machine
 
+
 \section{Metal Detector}
 % storiella di cosa è il metal detector
 
+\section{Alerts}
+% storiella di cosa sono gli alerts
 
 \section{More bounded contexts}
 In this report we omitted the other bounded contexts that were identified for the case study since they are not part of the scope of this project.
