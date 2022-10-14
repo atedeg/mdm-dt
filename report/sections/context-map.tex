@@ -6,14 +6,14 @@ The context map in figure \ref{img:context-map} represents the relationships pat
     \item \textbf{MilkPlanning [D, ACL] $\leftarrow$ [U] MilkTankDT}
     
     \texttt{MilkPlanning} receives the information about the tanks' milk quantity from the \texttt{MilkTankDT}.
-    Since \texttt{MilkPlanning} is a downstream core bounded context, an Anti-Corruption Layer is required.
+    \texttt{MilkPlanning} is a downstream bounded context and has an Anti-Corruption Layer.
     
     \item \textbf{Stocking [D, ACL] $\leftarrow$ [U] PackagingMachineDT \\ 
     Stocking [D, ACL] $\leftarrow$ [U] ScaleDT \\ 
     Stocking [D, ACL] $\leftarrow$ [U] MetalDetectorDT}
 
     \texttt{Stocking} receives the information about the quality assurance status considering the packaging machine, scale and metal detector. Data are sent from the \texttt{PackagingMachineDT}, \texttt{ScaleDT} and \texttt{MetalDetectorDT} respectively.
-    Since \texttt{Stocking} is a downstream bounded context, an Anti-Corruption Layer is required.
+    \texttt{Stocking} is a downstream bounded context and has an Anti-Corruption Layer.
 	
 	\item \textbf{Alert [D, ACL] $\leftarrow$ [U] MilkTankDT \\
 	Alert [D, ACL] $\leftarrow$ [U] MetalDetectorDT \\
@@ -21,12 +21,12 @@ The context map in figure \ref{img:context-map} represents the relationships pat
 	Alert [D, ACL] $\leftarrow$ ScaleDT}
 
     \texttt{Alert} receives the alerting messages from the digital twins. Data are sent from the \texttt{MilkTankDT}, \texttt{MetalDetectorDT}, \texttt{PackagingMachineDT} and \texttt{ScaleDT} respectively.
-    Since \texttt{Alert} is a downstream bounded context, an Anti-Corruption Layer is required.
+    \texttt{Alert} is a downstream bounded context and has an Anti-Corruption Layer.
 
     \item \textbf{MilkPlanning [D, ACL] $\leftarrow$  [U] Stocking} 
     
     \texttt{MilkPlanning} asks \texttt{Stocking} for the amount of products in stock.
-    Since \texttt{MilkPlanning} is a downstream core bounded context, an Anti-Corruption Layer is required.
+    \texttt{MilkPlanning} is a downstream bounded context and has an Anti-Corruption Layer.
 
 \end{itemize}
 
