@@ -30,4 +30,4 @@ def managePackagingMachineFailure(failure: PackagingMachineFailure): String = ""
         |Timestamp: ${failure.timestamp}
         |BatchID: ${failure.batchID.id}
         |Cutter temperature: ${failure.cutterTemperature.value}
-""".stripMargin
+        """.stripMargin
