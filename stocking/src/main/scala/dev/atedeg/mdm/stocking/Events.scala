@@ -3,6 +3,7 @@ package dev.atedeg.mdm.stocking
 import java.time.LocalDateTime
 
 import dev.atedeg.mdm.products.{ CheeseType, Product }
+import dev.atedeg.mdm.utils.*
 
 /**
  * The events that may be produced by the bounded context.
@@ -31,3 +32,14 @@ enum IncomingEvent:
    * Received when a [[Batch.Aging batch]] is created.
    */
   case NewBatch(batchID: BatchID, cheeseType: CheeseType, readyFrom: LocalDateTime)
+
+  /**
+    * Received when the metal detector rejects a [[Batch.Aging batch]].
+    */
+  case MetalDetectorRejectBatch(batchID: BatchID, quantity: PositiveNumber)
+
+  /**
+    * Received when the scale completes a [[Batch.Aging batch]].
+    */
+  case ScaleCompleteBatch(batchID: BatchID, droppedPackages: PositiveNumber)
+
