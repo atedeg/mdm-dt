@@ -17,8 +17,8 @@ The context map in figure \ref{img:context-map} represents the relationships pat
 	
 	\item \textbf{Alert [D, ACL] $\leftarrow$ [U] MilkTankDT \\
 	Alert [D, ACL] $\leftarrow$ [U] MetalDetectorDT \\
-	Alert [D, ACL] $\leftarrow$ PackagingMachineDT \\
-	Alert [D, ACL] $\leftarrow$ ScaleDT}
+	Alert [D, ACL] $\leftarrow$ [U]PackagingMachineDT \\
+	Alert [D, ACL] $\leftarrow$ [U]ScaleDT}
 
     \texttt{Alert} receives the alerting messages from the digital twins. Data are sent from the \texttt{MilkTankDT}, \texttt{MetalDetectorDT}, \texttt{PackagingMachineDT} and \texttt{ScaleDT} respectively.
     \texttt{Alert} is a downstream bounded context and has an Anti-Corruption Layer.
@@ -28,11 +28,27 @@ The context map in figure \ref{img:context-map} represents the relationships pat
     \texttt{MilkPlanning} asks \texttt{Stocking} for the amount of products in stock.
     \texttt{MilkPlanning} is a downstream bounded context and has an Anti-Corruption Layer.
 
+    \item \textbf{Alert[D, ACL] $\leftarrow$  [U] Maintenance}
+    
+    \texttt{Maintenance} sends the alerting messages about machine failure to \texttt{Alert}.
+    \texttt{Alert} is a downstream bounded context and has an Anti-Corruption Layer.
+
+	\item \textbf{Maintenance[D, ACL] $\leftarrow$  [U] PackagingMachineDT}
+	
+    \texttt{Maintenance} receives the information about the packaging machine status from \texttt{PackagingMachineDT} in order to forecast packaging machine failures.
+    \texttt{Maintenance} is a downstream bounded context and has an Anti-Corruption Layer.
+
+	\item \textbf{Reporting[D] $\leftarrow$  [U] ScaleDT \\
+    Reporting[D] $\leftarrow$  [U] MetalDetectorDT }
+
+    \texttt{Reporting} receives information from \texttt{ScaleDT} and \texttt{MetalDetectorDT} about their status in order to generate reports.
+	
+
 \end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{img/contextMap.eps}
+    \includegraphics[width=\textwidth]{img/context-map.png}
     \caption{Context Map}
     \label{img:context-map}
 \end{figure}

@@ -6,6 +6,8 @@ ContextMap MDM {
 	contains MetalDetectorDT
 	contains ScaleDT
 	contains Alert
+	contains Maintenance
+	contains Reporting
 
     MilkPlanning [D, ACL] <- [U] Stocking
 	MilkPlanning [D, ACL] <- [U] MilkTankDT
@@ -16,8 +18,15 @@ ContextMap MDM {
 	
 	Alert [D, ACL] <- [U] MilkTankDT
 	Alert [D, ACL] <- [U] MetalDetectorDT
-	Alert [D, ACL] <- PackagingMachineDT
-	Alert [D, ACL] <- ScaleDT
+	Alert [D, ACL] <- [U] PackagingMachineDT
+	Alert [D, ACL] <- [U] ScaleDT
+	Alert[D, ACL] <- [U] Maintenance
+
+	Maintenance[D, ACL] <- [U] PackagingMachineDT
+
+	Reporting[D] <- [U] ScaleDT
+	Reporting[D] <- [U] MetalDetectorDT
+
 }
 
 BoundedContext MilkPlanning
@@ -27,3 +36,5 @@ BoundedContext PackagingMachineDT
 BoundedContext MetalDetectorDT
 BoundedContext ScaleDT
 BoundedContext Alert
+BoundedContext Reporting
+BoundedContext Maintenance
