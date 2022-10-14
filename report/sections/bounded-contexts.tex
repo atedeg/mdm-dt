@@ -58,41 +58,17 @@ that it can make a milk order
     \caption{Outgoing events}
 \end{table}
 
-\section{Milk Tank DT}
+\subsection{Interaction with Milk Tank Digital Twin}
 A milk tank is a machine that stores milk.
 It has a sensor that measures the quantity of milk in the tank as well as temperature and pH value sensors.
 It also has a valve that allows the milk to be pumped out of the tank.
-The tanks send the milk level to Milk Planning B.C. in order to estimate the quintals of milk necessary to produce
+The Milk Planning B.C. asks the Milk Tank DT for the milk level in order to estimate the quintals of milk necessary to produce
 all products for the following week.
 Temperature and pH values are used to analyze the milk quality.
 Every time one of the two values above becomes out of range, a warning is sent to Alerts B.C.
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
-        \hline
-        Term              & Definition      \\ \hline
-        Quintals of milk  & A quantity of milk expressed in quintals.  \\ \hline
-        Temperature             & The current temperature of the milk in the tank. \\ \hline
-        PH       & The current pH value of the milk in the tank.      \\ \hline
-    \end{tabular}
-    \caption{Ubiquitous Language}
-\end{table}
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
-        \hline
-        Term               & Definition                                                               \\ \hline
-        Open the Valve    & Fired when the tank's valve needs to be opened.     \\ \hline
-        PH out of range & An event emitted when the pH value is out of the required range. \\ \hline
-        Temperature out of range & An event emitted when the Temperature value is out of the required range. \\ \hline
-    \end{tabular}
-    \caption{Outgoing events}
-\end{table}
 
 \section{Stocking}
-% TODO: sistemare prevedendo i DT
 After a batch of cheeses has ripened for the required amount of time,
 one of them is selected to perform quality assurance.
 Its result could be either positive or negative.
@@ -142,24 +118,13 @@ To label a cheese the worker has to weigh it, and an automated system will print
     \caption{Outgoing events}
 \end{table}
 
+\subsection{Interaction with quality assurance Digital Twins}
 
-\section{Scale DT}
+\subsubsection*{Scale DT}
 A scale is a machine that provides the weight of the products.
 It is used to weigh the products before they are stocked as a part of the quality assurance process.
 Provides information about the current batch it is processing, the mean weight of the products in the batch and the standard deviation of the weight of the products in the batch.
-It iforms that all of the packages of a batch to the Stocking B.C. the number of dropped packages (that is increased either if a product is overweight or underweight) with information about the corresponding batch, and the batch completed event with the corresponding batch.
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
-        \hline
-        Term              & Definition      \\ \hline
-        Current Batch  & The current batch is processing. \\ \hline
-        Mean weight             & The mean weight of the products in a batch. \\ \hline
-        Standard deviation weight       & The standard deviation weight of the products in a batch.      \\ \hline
-    \end{tabular}
-    \caption{Ubiquitous Language}
-\end{table}
+It informs the Stocking B.C. that all of the packages of a batch have been scaled with the number of dropped packages (that is increased either if a product is overweight or underweight).
 
 \begin{table}[H]
     \centering
@@ -168,7 +133,7 @@ It iforms that all of the packages of a batch to the Stocking B.C. the number of
         Term               & Definition                                                               \\ \hline
         Batch completed & An event emitted when the packages of a specific batch are all scaled. It contains the number of dropped packages. \\ \hline
     \end{tabular}
-    \caption{Outgoing events}
+    \caption{Stocking B.C. incoming events from Scale DT}
 \end{table}
 
 
@@ -185,7 +150,34 @@ Il batch scartato non viene propagato allo step successivo(bilancia).
 L'evento di scarto del batch viene propagato allo Stocking.
 
 \section{Alerts}
-% storiella di cosa sono gli alerts
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term               & Definition                                                               \\ \hline
+        PH out of range & An event emitted when the pH value is out of the required range. \\ \hline
+        Temperature out of range & An event emitted when the Temperature value is out of the required range. \\ \hline
+    \end{tabular}
+    \caption{Incoming events}
+\end{table}
+
+\section{Reporting}
+Outsourced to a third party company.
+
+Riceve dati dalla bilancia (mean weight e stddev) e l'evento del metal detector con il numero di pacchetti scartati
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term              & Definition      \\ \hline
+        Mean weight             & The mean weight of the products in a batch. \\ \hline
+        Standard deviation weight       & The standard deviation weight of the products in a batch.      \\ \hline
+    \end{tabular}
+    \caption{Ubiquitous Language}
+\end{table}
+
+\section{Machine Learning}
+
 
 \section{More bounded contexts}
 In this report we omitted the other bounded contexts that were identified for the case study since they are not part of the scope of this project.
