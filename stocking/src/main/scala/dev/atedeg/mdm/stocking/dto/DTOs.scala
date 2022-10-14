@@ -61,3 +61,11 @@ object QualityAssuredBatchFailedDTO:
 final case class BatchReadyForQualityAssuranceDTO(id: String, cheeseType: String)
 object BatchReadyForQualityAssuranceDTO:
   given DTO[Batch.ReadyForQualityAssurance, BatchReadyForQualityAssuranceDTO] = productTypeDTO
+
+final case class MetalDetectorRejectBatchDTO(batchID: String, quantity: Int)
+object MetalDetectorRejectBatchDTO:
+  given DTO[MetalDetectorRejectBatch, MetalDetectorRejectBatchDTO] = productTypeDTO
+
+final case class ScaleCompleteBatchDTO(batchID: String, rejectedPackages: Int)
+object ScaleCompleteBatchDTO:
+  given DTO[ScaleCompleteBatch, ScaleCompleteBatchDTO] = productTypeDTO

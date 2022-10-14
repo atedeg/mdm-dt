@@ -59,3 +59,15 @@ def rejectBatchHandler[M[_]: Monad: LiftIO: CanRead[BatchesRepository]: CanRaise
     rejectedBatch = rejectBatch(batchReady)
     _ <- repository.rejectBatch(rejectedBatch.toDTO)
   yield ()
+
+def metalDetectorRejectBatchEvent[M[_]: Monad: LiftIO: CanRead[BatchesRepository]: CanRaise[String]](
+    event: MetalDetectorRejectBatchDTO,
+): M[Unit] = rejectBatchHandler(event.batchID)
+// Make other operation with the number of rejected packages from the metal detector
+
+def scaleCompleteBatchEvent[M[_]: Monad: LiftIO: CanRead[BatchesRepository]: CanRaise[String]](
+    event: ScaleCompleteBatchDTO,
+): M[Unit] =
+  if event.rejectedPackages > 0 then rejectBatchHandler(event.batchID)
+  else approveBatchHandler(event.batchID)
+  // Make other operation with the number of rejected packages from the scale
