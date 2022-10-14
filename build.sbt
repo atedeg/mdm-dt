@@ -198,13 +198,13 @@ lazy val pricing = project
   )
   .dependsOn(utils, `products-shared-kernel`)
 
-lazy val `alarm-manager` = project
+lazy val `alerts-manager` = project
   .enablePlugins(DockerPlugin, JavaAppPackaging)
-  .in(file("alarm-manager"))
+  .in(file("alerts-manager"))
   .settings(commonSettings)
   .settings(commonDockerSettings)
   .settings(
-    libraryDependencies ++= Seq("org.eclipse.ditto" % "ditto-client" % "3.0.0")
+    libraryDependencies ++= Seq("org.eclipse.ditto" % "ditto-client" % "3.0.0"),
   )
   .dependsOn(utils)
 
