@@ -5,6 +5,15 @@ import dev.atedeg.mdm.Temperature
 import dev.atedeg.mdm.utils.serialization.DTO
 import dev.atedeg.mdm.utils.serialization.DTOGenerators.*
 import dev.atedeg.mdm.utils.serialization.DTOOps.*
+import dev.atedeg.mdm.Ph
+
+final case class PhDTO(value: Double)
+object PhDTO:
+  given DTO[Ph, PhDTO] = productTypeDTO
+
+final case class PhOutOfRangeDTO(ph: PhDTO, device: String)
+object PhOutOfRangeDTO:
+  given DTO[PhOutOfRange, PhOutOfRangeDTO] = productTypeDTO
 
 final case class TemperatureDTO(value: Double)
 object TemperatureDTO:

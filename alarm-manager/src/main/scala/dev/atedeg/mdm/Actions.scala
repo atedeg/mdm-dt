@@ -11,11 +11,9 @@ def manageTemperatureAlarm(failure: TemperatureFailure): String = """
         |Device: ${failure.device}
         |""".stripMargin
 
-def managePhAlarm[M[_]: Monad: Emits[PhFailureMessage]](failure: PhFailureMessage): M[Unit] =
-  val message = """
-          |pH out of range.
-          |Timestamp: ${failure.timestamp}
-          |pH: ${failure.temperature.value}
-          |Device: ${failure.device}
-          |""".stripMargin
-  emit(PhFailureMessage(message))
+def managePhAlarm(failure: PhFailure): String = """
+        |pH out of range.
+        |Timestamp: ${failure.timestamp}
+        |pH: ${failure.temperature.value}
+        |Device: ${failure.device}
+        |""".stripMargin
