@@ -12,13 +12,7 @@ Actions: Open Valve
 \subsubsection{Thing Model}
 Properties: Manufacturer, Serial number, currentBatch, cutterTemperature
 Events: packagingStarted, packagingMachineFailure, packageDamaged,
-<<<<<<< HEAD
 Action: startPackaging
-
-% cutterTemperature viene passato all'algoritmo che in caso di packagingMachineFailure o packageDamaged poi vede che magari la temperatura era troppo alta e capisce qual era il problema
-=======
-Action: Start Packaging
->>>>>>> 69156db... chore: useful comments
 
 % cutterTemperature viene passato all'algoritmo che in caso di packagingMachineFailure o packageDamaged poi vede che magari la temperatura era troppo alta e capisce qual era il problema
 
@@ -39,7 +33,6 @@ I parametri sono:
 numero di prodotti rilevati come non conformi appartenenti ad un determinato lotto
 
 \subsection{Scale}
-
 \subsubsection{Thing Model}
 Properties: Manufacturer, Serial number, currentBatch, meanWeight, stdDevWeight
 Events: numberOfDroppedPackages, batchCompleted
