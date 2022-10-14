@@ -34,12 +34,11 @@ enum IncomingEvent:
   case NewBatch(batchID: BatchID, cheeseType: CheeseType, readyFrom: LocalDateTime)
 
   /**
-    * Received when the metal detector rejects a [[Batch.Aging batch]].
-    */
+   * Received when the metal detector rejects a [[Batch.Aging batch]].
+   */
   case MetalDetectorRejectBatch(batchID: BatchID, quantity: PositiveNumber)
 
   /**
-    * Received when the scale completes a [[Batch.Aging batch]].
-    */
+   * Received when the scale completes a [[Batch.Aging batch]].
+   */
   case ScaleCompleteBatch(batchID: BatchID, droppedPackages: PositiveNumber)
-
