@@ -5,3 +5,4 @@ enum IncomingEvents:
   case PhOutOfRange(ph: Ph, device: String)
   case PackagingMachineFailure(batchID: BatchID, cutterTemperature: Temperature)
   case PackageDamaged(batchID: BatchID, cutterTemperature: Temperature)
+  case PackagingMachineMaintenance(maintenance: Maintenance)

@@ -22,3 +22,5 @@ final case class PackageDamageFailure(timestamp: LocalTime, batchID: BatchID, cu
 
 final case class PackagingMachineFailureMessage(message: String)
 final case class PackageDamagdMessage(message: String)
+
+final case class Maintenance(motivation: String)
