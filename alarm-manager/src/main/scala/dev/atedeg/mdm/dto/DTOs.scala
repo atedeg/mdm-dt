@@ -1,11 +1,11 @@
 package dev.atedeg.mdm.dto
 
 import dev.atedeg.mdm.IncomingEvents.*
+import dev.atedeg.mdm.Ph
 import dev.atedeg.mdm.Temperature
 import dev.atedeg.mdm.utils.serialization.DTO
 import dev.atedeg.mdm.utils.serialization.DTOGenerators.*
 import dev.atedeg.mdm.utils.serialization.DTOOps.*
-import dev.atedeg.mdm.Ph
 
 final case class PhDTO(value: Double)
 object PhDTO:
@@ -22,4 +22,3 @@ object TemperatureDTO:
 final case class TemperatureOutOfRangeDTO(temperature: TemperatureDTO, device: String)
 object TemperatureOutOfRangeDTO:
   given DTO[TemperatureOutOfRange, TemperatureOutOfRangeDTO] = productTypeDTO
-
