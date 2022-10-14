@@ -110,7 +110,7 @@ lazy val root = project
     restocking,
     `client-orders`,
     pricing,
-    `alarm-manager`,
+    `alerts-manager`,
   )
 
 lazy val utils = project

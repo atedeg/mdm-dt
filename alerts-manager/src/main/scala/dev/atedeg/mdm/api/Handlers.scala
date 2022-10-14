@@ -36,3 +36,21 @@ def handlePhOutOfRangeEvent[M[_]: Monad: LiftIO: CanRaise[String]](event: PhOutO
     _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
     _ <- IO.println(message).liftIO[M]
   yield ()
+
+def handlePackagingMachineFailureEvent[M[_]: Monad: LiftIO: CanRaise[String]](
+    event: PackagingMachineFailureDTO,
+): M[Unit] =
+  for
+    r <- validate(event)
+    message = managePackagingMachineFailure(PackagingMachineFailure(LocalTime.now(), r.batchID, r.cutterTemperature))
+    _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
+    _ <- IO.println(message).liftIO[M]
+  yield ()
+
+def handlePackageDamagedEvent[M[_]: Monad: LiftIO: CanRaise[String]](event: PackageDamagedDTO): M[Unit] =
+  for
+    r <- validate(event)
+    message = managePackageDamage(PackageDamageFailure(LocalTime.now(), r.batchID, r.cutterTemperature))
+    _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
+    _ <- IO.println(message).liftIO[M]
+  yield ()

@@ -17,3 +17,17 @@ def managePhAlarm(failure: PhFailure): String = """
         |pH: ${failure.temperature.value}
         |Device: ${failure.device}
         |""".stripMargin
+
+def managePackageDamage(failure: PackageDamageFailure): String = """
+        |Package damaged.
+        |Timestamp: ${failure.timestamp}
+        |BatchID: ${failure.batchID.id}
+        |Cutter temperature: ${failure.cutterTemperature.value}
+        |""".stripMargin
+
+def managePackagingMachineFailure(failure: PackagingMachineFailure): String = """
+        |Packaging machine failure.
+        |Timestamp: ${failure.timestamp}
+        |BatchID: ${failure.batchID.id}
+        |Cutter temperature: ${failure.cutterTemperature.value}
+""".stripMargin
