@@ -207,3 +207,10 @@ lazy val `alarm-manager` = project
     libraryDependencies ++= Seq("org.eclipse.ditto" % "ditto-client" % "3.0.0")
   )
   .dependsOn(utils)
+
+lazy val maintenance = project
+  .enablePlugins(DockerPlugin, JavaAppPackaging)
+  .in(file("maintenance"))
+  .settings(commonSettings)
+  .settings(commonDockerSettings)
+  .dependsOn(utils)
