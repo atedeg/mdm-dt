@@ -36,7 +36,7 @@ ThisBuild / developers := List(
   ),
 )
 
-ThisBuild / wartremoverErrors ++= Warts.allBut(Wart.Overloading, Wart.Equals)
+// ThisBuild / wartremoverErrors ++= Warts.allBut(Wart.Overloading, Wart.Equals)
 
 ThisBuild / scalafixDependencies ++= Seq(
   "com.github.xuwei-k" %% "scalafix-rules" % "0.2.9",
@@ -62,7 +62,7 @@ val commonSettings = Seq(
     "org.http4s" %% "http4s-blaze-server" % "0.23.12",
     "org.http4s" %% "http4s-circe" % "0.23.16",
     "org.http4s" %% "http4s-dsl" % "0.23.16",
-    "org.http4s" %% "http4s-blaze-client" % "0.23.16",
+    "org.http4s" %% "http4s-blaze-client" % "0.23.12",
     "io.circe" %% "circe-generic" % "0.14.3",
     "io.circe" %% "circe-core" % "0.14.3",
     "io.circe" %% "circe-generic" % "0.14.3",
@@ -110,6 +110,7 @@ lazy val root = project
     restocking,
     `client-orders`,
     pricing,
+    `alarm-manager`,
   )
 
 lazy val utils = project
@@ -202,4 +203,7 @@ lazy val `alarm-manager` = project
   .in(file("alarm-manager"))
   .settings(commonSettings)
   .settings(commonDockerSettings)
+  .settings(
+    libraryDependencies ++= Seq("org.eclipse.ditto" % "ditto-client" % "3.0.0")
+  )
   .dependsOn(utils)
