@@ -1,5 +1,6 @@
 package dev.atedeg.mdm.dto
 
+import dev.atedeg.mdm.BatchID
 import dev.atedeg.mdm.IncomingEvents.*
 import dev.atedeg.mdm.Ph
 import dev.atedeg.mdm.Temperature
@@ -25,9 +26,9 @@ object TemperatureOutOfRangeDTO:
 
 private given DTO[BatchID, String] = unwrapFieldDTO
 
-final case class PackagingMachineFailureDTO(batchID: String, cutterTemperature: TemperatureDTO)
-object PackagingMachineFailureDTO:
-  given DTO[PackagingMachineFailure, PackagingMachineFailureDTO] = productTypeDTO
+final case class PackagingMachineFailedDTO(batchID: String, cutterTemperature: TemperatureDTO)
+object PackagingMachineFailedDTO:
+  given DTO[PackagingMachineFailed, PackagingMachineFailedDTO] = productTypeDTO
 
 final case class PackageDamagedDTO(batchID: String, cutterTemperature: TemperatureDTO)
 object PackageDamagedDTO:

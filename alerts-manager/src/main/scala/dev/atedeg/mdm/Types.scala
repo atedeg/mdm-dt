@@ -1,6 +1,7 @@
 package dev.atedeg.mdm
 
 import java.time.LocalTime
+import java.util.UUID
 
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.numeric.Greater
@@ -21,6 +22,6 @@ final case class PackagingMachineFailure(timestamp: LocalTime, batchID: BatchID,
 final case class PackageDamageFailure(timestamp: LocalTime, batchID: BatchID, cutterTemperature: Temperature)
 
 final case class PackagingMachineFailureMessage(message: String)
-final case class PackageDamagdMessage(message: String)
+final case class PackageDamagedMessage(message: String)
 
 final case class Maintenance(motivation: String)
