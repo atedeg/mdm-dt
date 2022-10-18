@@ -12,4 +12,4 @@ final case class Temperature(value: Double Refined Greater[-273.15])
  */
 final case class BatchID(id: UUID)
 
-final case class Maintenance(motivation: String)
+final case class Maintenance(value: String)
