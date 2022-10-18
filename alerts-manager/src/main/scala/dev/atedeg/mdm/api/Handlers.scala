@@ -10,8 +10,15 @@ import cats.syntax.all.*
 import eu.timepit.refined.numeric.Greater
 import eu.timepit.refined.refineV
 
-import dev.atedeg.mdm.{ managePackageDamage, managePackagingMachineFailure, managePhAlarm, manageTemperatureAlarm }
+import dev.atedeg.mdm.{
+  managePackageDamage,
+  managePackagingMachineFailure,
+  managePackagingMachineMaintenance,
+  managePhAlarm,
+  manageTemperatureAlarm,
+}
 import dev.atedeg.mdm.IncomingEvents.*
+import dev.atedeg.mdm.Maintenance
 import dev.atedeg.mdm.PackageDamageFailure
 import dev.atedeg.mdm.PackagingMachineFailure
 import dev.atedeg.mdm.PhFailure
@@ -54,6 +61,16 @@ def handlePackageDamagedEvent[M[_]: Monad: LiftIO: CanRaise[String]](event: Pack
   for
     r <- validate(event)
     message = managePackageDamage(PackageDamageFailure(LocalTime.now(), r.batchID, r.cutterTemperature))
+    _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
+    _ <- IO.println(message).liftIO[M]
+  yield ()
+
+def handlePackagingMachineMaintenanceEvent[M[_]: Monad: LiftIO: CanRaise[String]](
+    event: PackagingMachineMaintenanceDTO,
+): M[Unit] =
+  for
+    r <- validate(event)
+    message = managePackagingMachineMaintenance(r.maintenance)
     _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
     _ <- IO.println(message).liftIO[M]
   yield ()

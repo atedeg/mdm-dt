@@ -31,3 +31,8 @@ def managePackagingMachineFailure(failure: PackagingMachineFailure): String = ""
         |BatchID: ${failure.batchID.id}
         |Cutter temperature: ${failure.cutterTemperature.value}
         """.stripMargin
+
+def managePackagingMachineMaintenance(maintenance: Maintenance): String = """
+        |Packaging machine maintenance is needed.
+        |Motivation: ${maintenance.motivation}
+        """.stripMargin
