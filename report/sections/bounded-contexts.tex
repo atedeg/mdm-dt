@@ -136,18 +136,28 @@ It informs the Stocking B.C. that all of the packages of a batch have been scale
     \caption{Stocking B.C. incoming events from Scale DT}
 \end{table}
 
+\subsubsection*{Metal Detector DT}
+A metal detector is a machine that detects metal objects in the products.
+It is used to check the products before they are stocked as a part of the quality assurance process.
+The fact that the metal detector detects metal components is very rare so if the event occurs, the entire batch is discarded for further checks on the quality of the products.
+The rejected batch is not propagated to the next step (scale).
+It informs the Stocking B.C. that a batch has been rejected.
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term               & Definition                                                               \\ \hline
+        Metal Detector Reject Batch & An event emitted when a metal object is detected in a product and the whole batch is rejected for further checks. \\ \hline
+    \end{tabular}
+    \caption{Stocking B.C. incoming events from Metal Detector DT}
+\end{table}
+
 
 \section{Packaging Machine DT}
 % storiella di cosa è la packaging machine
 
-
-\section{Metal Detector DT}
-Il fatto che il metal rilevi componenti metalliche è molto raro.
-% questa cosa di seguito la mettiamo tra le motivazioni:
-% Se accade  che il metal rilevi qualcosa voglio anche controllare i macchinari per vedere se c'è sono deterioramento etc.
-Per tanto se l'evento accade , il batch viene scartato per ulteriori accertamenti sulla qualità dei prodotti.
-Il batch scartato non viene propagato allo step successivo(bilancia).
-L'evento di scarto del batch viene propagato allo Stocking.
 
 \section{Alerts}
 \begin{table}[H]
