@@ -154,27 +154,38 @@ It informs the Stocking B.C. that a batch has been rejected.
     \caption{Stocking B.C. incoming events from Metal Detector DT}
 \end{table}
 
-
-\section{Packaging Machine DT}
-% storiella di cosa è la packaging machine
-
-
 \section{Alerts}
+Alerts is a B.C. that receives alerts from the other B.C. and from the Digital Twins.
+
+From Maintenance B.C. receives the packaging machine maintenance event, which is a warning that the packaging machine is not working properly.
+
+\subsection{Interaction with Digital Twins}
+\subsubsection*{Packaging Machine DT}
+A packaging machine is a machine that packages products.
+It is used to package products before the quality assurance process.
+It informs the Alerts B.C. that a package has been damaged or that the packaging machine has stopped working for some reason.
+
+\subsubsection*{Milk Tank DT}
+Informs the Alerts B.C. every time the pH value or the temperature value becomes out of range.
+
 \begin{table}[H]
     \centering
     \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
         \hline
         Term               & Definition                                                               \\ \hline
-        PH out of range & An event emitted when the pH value is out of the required range. \\ \hline
-        Temperature out of range & An event emitted when the Temperature value is out of the required range. \\ \hline
+        PH out of range & Event received when the pH value is out of the required range. \\ \hline
+        Temperature out of range & Event received when the Temperature value is out of the required range. \\ \hline
+        Packaging machine failed & Event received when the packing machine stopped working for some reason. \\ \hline
+        Package Damaged & Event received when a package of a batch has been damaged. \\ \hline
+        Packaging machine maintenance & Event received when the packaging machine needs maintenance.  \\ \hline
     \end{tabular}
-    \caption{Incoming events}
+    \caption{Incoming events from Packaging Machine DT, Milk Tank DT, Maintenance BC}
 \end{table}
 
 \section{Reporting}
-Outsourced to a third party company.
+This B.C. will be outsourced to a third-party company.
+It receives data from the scale (mean weight and standard deviation) and the metal detector (number of discarded packages) DTs.
 
-Riceve dati dalla bilancia (mean weight e stddev) e l'evento del metal detector con il numero di pacchetti scartati
 \begin{table}[H]
     \centering
     \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
@@ -182,11 +193,36 @@ Riceve dati dalla bilancia (mean weight e stddev) e l'evento del metal detector 
         Term              & Definition      \\ \hline
         Mean weight             & The mean weight of the products in a batch. \\ \hline
         Standard deviation weight       & The standard deviation weight of the products in a batch.      \\ \hline
+        Dropped packages & The number of dropped packages in a batch. \\ \hline
     \end{tabular}
-    \caption{Ubiquitous Language}
+    \caption{Incoming events}
 \end{table}
 
 \section{Maintenance}
+This B.C. receives events from the Packaging Machine DT and uses the information to predict when the packaging machine will need maintenance.
+It receives the events Packaging machine failure with the information regarding the batch id and the cutter temperature when the event has occurred, and the package damaged event with the same information.
+When a prediction is ready, an event with the maintenance description is propagated to the alarm B.C.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term              & Definition      \\ \hline
+        Packaging Machine Failure             & An event received regarding the packaging machine failure. \\ \hline
+        Package Damaged       & Event received when a package is damaged during the packaging machine process.      \\ \hline
+    \end{tabular}
+    \caption{Outgoing events}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.2\textwidth}|*{3}{>{\arraybackslash}p{0.7\textwidth}|}}
+        \hline
+        Term              & Definition      \\ \hline
+        Packaging Machine Maintenance  & An event emitted when a prediction of failure is ready. \\ \hline
+    \end{tabular}
+    \caption{Outgoing events}
+\end{table}
 
 
 \section{More bounded contexts}
