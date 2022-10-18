@@ -42,24 +42,23 @@
       }
     },
     "events": {
-      "numberOfDroppedPackages": {
-       "title": "Report the number of dropped packages" ,
-        "description": "Report the number of too much eavy/light packages that are dropped",
-        "data": {
-          "@type": "om2:Quantity",
-          "title": "Number of packages",
-          "type": "number",
-          "unit": "om2:Quantity"
+      "dropped-packages": {
+        "title": "Report the number of dropped packages",
+        "description": "Report the number of too much eavy/light packages that are dropped.",
+        "type": "object",
+        "properties": {
+            "batch-id": { "type": "string" },
+            "dropped-packages": { "type": "integer" }
         }
-      },
-      "batchCompleted": {
+    },
+      "batch-completed": {
         "title": "Batch is completed",
         "description": "Report that the scaling of a batch has been completed",
-        "data": {
-          "@type": "Boolean",
-          "title": "True if the batch has been completed",
-          "type": "boolean",
-          "unit": ""        
+        "type": "object",
+        "properties": {
+            "completed": { "type": "boolean" },
+            "batch-id": { "type": "string" },
+            "dropped-packages": { "type": "integer" }
         }
       }
     }
