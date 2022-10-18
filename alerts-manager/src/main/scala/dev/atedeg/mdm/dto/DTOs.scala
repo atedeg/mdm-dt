@@ -2,6 +2,7 @@ package dev.atedeg.mdm.dto
 
 import dev.atedeg.mdm.BatchID
 import dev.atedeg.mdm.IncomingEvents.*
+import dev.atedeg.mdm.Maintenance
 import dev.atedeg.mdm.Ph
 import dev.atedeg.mdm.Temperature
 import dev.atedeg.mdm.utils.serialization.DTO
@@ -33,3 +34,11 @@ object PackagingMachineFailedDTO:
 final case class PackageDamagedDTO(batchID: String, cutterTemperature: TemperatureDTO)
 object PackageDamagedDTO:
   given DTO[PackageDamaged, PackageDamagedDTO] = productTypeDTO
+
+final case class MaintenanceDTO(motivation: String)
+object MaintenanceDTO:
+  given DTO[Maintenance, MaintenanceDTO] = productTypeDTO
+
+final case class PackagingMachineMaintenanceDTO(maintenance: MaintenanceDTO)
+object PackagingMachineMaintenanceDTO:
+  given DTO[PackagingMachineMaintenance, PackagingMachineMaintenanceDTO] = productTypeDTO
