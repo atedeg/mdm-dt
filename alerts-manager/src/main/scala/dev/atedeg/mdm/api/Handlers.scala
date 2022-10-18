@@ -10,12 +10,15 @@ import cats.syntax.all.*
 import eu.timepit.refined.numeric.Greater
 import eu.timepit.refined.refineV
 
-import dev.atedeg.mdm.{ managePhAlarm, manageTemperatureAlarm }
+import dev.atedeg.mdm.{ managePackageDamage, managePackagingMachineFailure, managePhAlarm, manageTemperatureAlarm }
 import dev.atedeg.mdm.IncomingEvents.*
+import dev.atedeg.mdm.PackageDamageFailure
+import dev.atedeg.mdm.PackagingMachineFailure
 import dev.atedeg.mdm.PhFailure
 import dev.atedeg.mdm.TemperatureFailure
 import dev.atedeg.mdm.TemperatureFailureMessage
 import dev.atedeg.mdm.dto.*
+import dev.atedeg.mdm.dto.given
 import dev.atedeg.mdm.utils.monads.*
 import dev.atedeg.mdm.utils.monads.{ CanRaise, Emits }
 import dev.atedeg.mdm.utils.monads.getOrRaise
@@ -38,7 +41,7 @@ def handlePhOutOfRangeEvent[M[_]: Monad: LiftIO: CanRaise[String]](event: PhOutO
   yield ()
 
 def handlePackagingMachineFailureEvent[M[_]: Monad: LiftIO: CanRaise[String]](
-    event: PackagingMachineFailureDTO,
+    event: PackagingMachineFailedDTO,
 ): M[Unit] =
   for
     r <- validate(event)
