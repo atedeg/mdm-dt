@@ -60,21 +60,19 @@
       "packagingMachine-failure": {
         "title": "Packaging machine failure",
         "description": "Report a packaging machine failure",
-        "data": {
-          "@type": "Object",
-          "title": "Packaging Machine Failure",
-          "type": "object",
-          "unit": ""
+        "type": "object",
+        "properties": {
+            "batch-id": { "type": "string" },
+            "cutter-temperature": { "type": "integer" }
         }
       },
       "package-damaged": {
         "title": "Package damaged",
         "description": "Report that a package has been damaged",
-        "data": {
-          "@type": "Object",
-          "title": "Package Damaged",
-          "type": "object",
-          "unit": ""
+        "type": "object",
+        "properties": {
+            "batch-id": { "type": "string" },
+            "cutter-temperature": { "type": "integer" }
         }
       }
     }
