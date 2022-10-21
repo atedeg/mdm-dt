@@ -14,8 +14,10 @@ These are the subdomains that emerged from the Event Storming process:
 \end{itemize}
 
 We proceeded with this exploration of the domain by individuating the subdomains where digital twins would have been crucial to help the processes.
-The two subdomains we selected were \textit{Milk Planning} and \textit{Stocking}.
-The decision was made considering the added value that the digital twins could bring to the processes and the fact that the two subdomains were quite complex.
+The two subdomains we selected were \textit{Milk Planning} and \textit{Stocking} \ref{img:event-storming}.
+The decision was made considering the added value that the digital twins could bring to the processes (this aspect will be explored in the\ref{sec:dt-motivations} section) and the fact that the two subdomains were quite complex.
+The \textit{Stocking} subdomain is the one that manages the quality assurance of the cheeses, which is a crucial process for the company.
+The \textit{Milk Planning} subdomain is the one that estimates the amount of milk to order each week, which is a process that is very important for the company's financial health.
 
 \begin{figure}[H]
     \centering
@@ -24,8 +26,7 @@ The decision was made considering the added value that the digital twins could b
     \label{img:event-storming}
 \end{figure}
 
-
-\section{Digital Twins - motivations}
+\section{Digital Twins - motivations}\label{sec:dt-motivations}
 This section will describe the digital twins that were chosen to be implemented in the project and the motivations behind the choice of inserting them in this context.
 
 \subsection{Milk Tank Digital Twin}
@@ -76,6 +77,18 @@ The figure\ref{img:subdomains-dt} shows the bounded contexts and the digital twi
 
 \section{Business differentiation}
 We then proceeded to have a more in-depth analysis of each subdomain to determine their business differentiation and to do a first estimate of the model's complexity. The following considerations were made:
-% immagine di business differentiation
+\begin{itemize}
+    \item Production Planning and Milk Planning are to be considered core subdomains since they can be decisive in order to optimize the efficiency of the factory
+    \item the Milk Planning subdomain can be seen as a big-bet subdomain since it has the potential to significantly disrupt the market if implemented in such a way that can predict trends and spikes in orders
+    \item the Reporting subdomain is considered as outsourced since it is not a core subdomain and it is not a big-bet subdomain either. It is also not a subdomain that can be considered a differentiator for the company.
+    \item the remaining subdomains introduce a lower amount of business differentiation, so they are to be considered as supporting subdomains
+\end{itemize}
 
+We gathered these pieces of information and compiled the following core domain chart:
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/core-domain-chart.png}
+    \caption{The core domain chart of the identified subdomains}
+    \label{img:core-domain-chart}
+\end{figure}
