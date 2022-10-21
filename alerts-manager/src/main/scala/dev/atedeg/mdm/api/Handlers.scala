@@ -44,7 +44,7 @@ def handlePhOutOfRangeEvent[M[_]: Monad: LiftIO: CanRaise[String]](event: PhOutO
     r <- validate(event)
     message = managePhAlarm(PhFailure(LocalTime.now(), r.ph, r.device))
     _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
-    _ <- IO.println(message).liftIO[M]
+    _ <- sendEmail(message)
   yield ()
 
 def handlePackagingMachineFailureEvent[M[_]: Monad: LiftIO: CanRaise[String]](
@@ -54,7 +54,7 @@ def handlePackagingMachineFailureEvent[M[_]: Monad: LiftIO: CanRaise[String]](
     r <- validate(event)
     message = managePackagingMachineFailure(PackagingMachineFailure(LocalTime.now(), r.batchID, r.cutterTemperature))
     _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
-    _ <- IO.println(message).liftIO[M]
+    _ <- sendEmail(message)
   yield ()
 
 def handlePackageDamagedEvent[M[_]: Monad: LiftIO: CanRaise[String]](event: PackageDamagedDTO): M[Unit] =
@@ -62,7 +62,7 @@ def handlePackageDamagedEvent[M[_]: Monad: LiftIO: CanRaise[String]](event: Pack
     r <- validate(event)
     message = managePackageDamage(PackageDamageFailure(LocalTime.now(), r.batchID, r.cutterTemperature))
     _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
-    _ <- IO.println(message).liftIO[M]
+    _ <- sendEmail(message)
   yield ()
 
 def handlePackagingMachineMaintenanceEvent[M[_]: Monad: LiftIO: CanRaise[String]](
@@ -72,5 +72,7 @@ def handlePackagingMachineMaintenanceEvent[M[_]: Monad: LiftIO: CanRaise[String]
     r <- validate(event)
     message = managePackagingMachineMaintenance(r.maintenance)
     _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
-    _ <- IO.println(message).liftIO[M]
+    _ <- sendEmail(message)
   yield ()
+
+private def sendEmail[M[_]: Monad: LiftIO](content: String): M[Unit] = ???
