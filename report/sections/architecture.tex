@@ -3,9 +3,9 @@ The architecture of each bounded context follows the Clean Architecture's struct
 
 \begin{itemize}
     \item The first layer consists of the domain Aggregates we named Types; these are the domain entities and are the least likely to change when something external changes
-    \item The second layer is composed of the domain "Actions", namely the business processes to model and "Domain Events": the starting point for almost all the business processes. They orchestrate the flow of data to and from the entities of the layer below
+    \item The second layer is composed of the domain ``Actions'', namely the business processes to model and ``Domain Events'': the starting point for almost all the business processes. They orchestrate the flow of data to and from the entities of the layer below
     \item For the Interface Adapters layer, in order to protect the layers underneath, we built Data Transfer Objects (DTOs) for every element that has to be transferred towards other bounded contexts or be persisted in storage. We also used the Repository pattern to abstract over the particular data persistence infrastructure. DTOs were also used in the Anti-Corruption Layer and Open-Host Service patterns to convert and present external data to the Entities and Use Case layers
-    \item As for the Frameworks and Drivers layer, it contains the minimal amount of code needed to glue together the "communication code" (HTTP servers, Database persistence, etc.) with the code below. We implemented the HTTP servers belonging to this layer and mocked the remaining code related to data persistence or message-oriented communication.
+    \item As for the Frameworks and Drivers layer, it contains the minimal amount of code needed to glue together the ``communication code'' (HTTP servers, Database persistence, etc.) with the code below. We implemented the HTTP servers belonging to this layer and mocked the remaining code related to data persistence or message-oriented communication.
     
     However, we did not mock the code necessary to communicate with the digital twins.
     We allowed the transfer of information with the usage of WebSockets, so we could receive data and events sent directly from the digital twins.
@@ -16,7 +16,7 @@ The architecture of each bounded context follows the Clean Architecture's struct
     \centering
     \includegraphics[width=0.8\textwidth]{img/clean-architecture.png}
     \caption{Bounded Contexts architecture}
-    \label{img:context-map}
+    \label{img:clean-architecture}
 \end{figure}
 
 \section{Context Map}
