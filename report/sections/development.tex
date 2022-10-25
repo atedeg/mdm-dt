@@ -66,4 +66,34 @@ In tables \ref{tab:ditto-wot-thing} and \ref{tab:ditto-wot-feature} we can see t
 \end{table}
 
 \section{Handlers implementation}
-% mettere qualche snippet di codice degli handler 
+All domain actions take advantage of a monadic encoding of side effects, ranging from failure with an exception, to emitting events, to reading an immutable global state.
+The same approach were applied to the handlers implementation for the domain events.
+
+
+A code example of the handler of the Packaging Machine Failure event, implemented in the \texttt{Alerts} bounded context:
+
+\begin{lstlisting}[language=Scala]
+    def handlePackagingMachineFailureEvent[M[_]: Monad: LiftIO: CanRaise[String]](
+        event: PackagingMachineFailedDTO,
+    ): M[Unit] =
+      for
+        r <- validate(event)
+        message = managePackagingMachineFailure(PackagingMachineFailure(LocalTime.now(), r.batchID, r.cutterTemperature))
+        _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
+        _ <- sendEmail(message)
+      yield ()
+\end{lstlisting}
+
+
+A code example of the handler in the \texttt{Maintenance} bounded context, representing the storage of the failure event in the database:
+
+\begin{lstlisting}[language=Scala]
+def packagingMachineFailureHandler[M[_]: Monad: LiftIO: CanRaise[String]](
+    failure: PackagingMachineFailureDTO,
+): M[Unit] =
+  for
+    failureEvent <- validate(failure)
+    _ <- collectMachineFailure(failureEvent)
+    _ <- writeFailureToDB(failureEvent)
+  yield ()
+\end{lstlisting}
