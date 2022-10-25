@@ -97,3 +97,16 @@ def packagingMachineFailureHandler[M[_]: Monad: LiftIO: CanRaise[String]](
     _ <- writeFailureToDB(failureEvent)
   yield ()
 \end{lstlisting}
+
+\section{DTOs implementation}
+All events are represented with external entities that need to be transformed in domain entities.
+This was done by implementing a set of DTOs (Data Transfer Objects) for each event, which are used to validate the incoming events and to transform them into domain entities.
+
+A code example of the Packaging Machine Failure DTO:
+
+\begin{lstlisting}[language=Scala]
+    final case class PackagingMachineMaintenanceDTO(maintenance: String)
+object PackagingMachineMaintenanceDTO:
+  given DTO[PackagingMachineFailure, PackagingMachineFailureDTO] = productTypeDTO
+
+\end{lstlisting}
