@@ -3,35 +3,35 @@ In industrial contexts, digital twins can be useful for several purposes.
 In our case study, we identified the digital twins as the "Process Manufacturing" use case.
 In fact, the area of application for this kind of digital twins are:
 \begin{itemize}
-    \item improve product quality and process optimization
-    \item predict equipment failures with machine learning models based on real-time data and models and on historical failure data
-    \item monitor real-time compliance with safety and regulatory requirements
+	\item improve product quality and process optimization
+	\item predict equipment failures with machine learning models based on real-time data and models and on historical failure data
+	\item monitor real-time compliance with safety and regulatory requirements
 \end{itemize}
 Below we will analyze, for each digital twin, the context in which it lives and which of the above characteristics it falls into to improve business processes.
 
 Digital twins are commonly divided into subtypes that sometimes include: digital twin prototype (DTP), digital twin instance (DTI), and digital twin aggregate (DTA).
 The DTP consists of the designs, analyses, and processes that realize a physical product.
-The DTP exists before there is a physical product so actually is not a digital twin by definition.
-The DTI is the digital twin of each individual instance of the product once it is manufactured.
+The DTP exists before there is a physical product so is not a digital twin by definition.
+The DTI is the digital twin of each instance of the product once it is manufactured.
 The DTA is the aggregation of DTIs whose data and information can be used for interrogation about the physical product, prognostics and learning.
 The specific information contained in the digital twins is driven by use cases.
 
-In this project we dealt mainly with DTI because of the industrial and manufacturing nature of the case study.
-However, we believe that the use and modeling of DTA-type digital twin can contribute more to improve the quality and production efficiency of products.
-DTA-type digital twins were not examined in this project because of the current limitations of digital twin enabling platforms.
-We are not aware of any platforms that natively model the concept of digital twin aggregation, so for sake of simplicity we decided not to implement such a concept.
+In this project, we dealt mainly with DTI because of the industrial and manufacturing nature of the case study.
+However, we believe that the use and modeling of DTA-type digital twins can contribute more to improving the quality and production efficiency of products.
+DTA-type digital twins were not examined in this project because of the current limitations of digital twin-enabling platforms.
+We are not aware of any platforms that natively model the concept of digital twin aggregation, so for sake of simplicity, we decided not to implement such a concept.
 
-Below we illustrate the digital twin modeling that is part of the project; in particular we will examine the functionalities they cover and what data they
-manipulate as well as make considerations about the strategic impact they have in business production processes.
+Below we illustrate the digital twin modeling that is part of the project; in particular, we will examine the functionalities they cover and what data they
+manipulate as well as make considerations about the strategic impact they have on business production processes.
 
 \section{Digital twins of machines}
-Following the domain analysis with experts, we focused on what were the most critical parts of the whole process of making a cheese.
+Following the domain analysis with experts, we focused on what were the most critical parts of the whole process of making cheese.
 This analysis showed that the steps that affect productivity the most are product packaging and the related quality assurance process.
 
-Domain experts also explained to us how milk maintenance is critical, and currently there is no system that monitors its status in real time.
-In fact, ad-hoc analyses are done before each production to verify the goodness of the milk to be used in production.
-In this regard, it would be good to have a system in place that monitors milk values in real time so that action can be taken if the need arises,
-thus avoiding analysis prior to use for production.
+Domain experts also explained to us how milk maintenance is critical, and currently, no system monitors its status in real-time.
+Ad-hoc analyses are done before each production to verify the goodness of the milk to be used in production.
+In this regard, it would be good to have a system in place that monitors milk values in real-time so that action can be taken if the need arises,
+thus avoiding analysis before use for production.
 
 As a result of the considerations and weaknesses raised by domain experts, we identified the following digital twins:
 \textit{milk-tank} that monitors the parameters of the stored milk; \textit{packing-machine} that monitors the parameters that are then used to carry
@@ -40,41 +40,61 @@ out predictive maintenance; and finally \textit{metal-detector} and \textit{scal
 \subsection{Milk Tank}
 As mentioned earlier, milk storage is a crucial aspect for several reasons: milk yield, product quality, and parameters to be met.
 
-At present, milk storage management is done manually: once stored, the milk lies until new production is required.
+At present, milk storage management is done manually: once stored, the milk lies until a new production is required.
 Before production begins, an analysis is conducted on the milk to detect its pH, protein level and other parameters.
-In addition to being a cost to the farm, this operation represents a loss of time in cheese production.
-In fact, it takes an operator about thirty minutes to perform this kind of analysis.
-Another factor that can affect the quality of milk is temperature changes: continuous temperature changes can alter the structure of milk and be reflected in
-a lower yield during processing or even in non-use.
-Finally, integration of milk tanks with the farm computer system is entirely absent, so there is no information stored about the status of stored milk.
-Integration with the cheese processing machinery is partial; in fact, it is an operator who has to issue the start processing command to open the tank valve
-and then proceed with processing.
+In addition to being a cost to the farm, this operation represents a loss of time in cheese production: it takes an operator about thirty minutes to
+perform this kind of analysis.
+Another factor that can affect the quality of milk is temperature changes: continuous temperature changes can alter the structure of milk and be 
+reflected in a lower yield during processing or even in non-use.
+Finally, the integration of milk tanks with the farm information system is absent, so there is no information about the status of stored milk.
+Integration with the cheese processing machinery is partial; in fact, it is an operator who has to issue the start processing command to open the 
+tank valve and then proceed with processing.
 
-To solve most of the raised weaknesses, we believe that the use of digital twin for the milk tank can be an effective tool.
-In fact, with the use of a digital twin we can guarantee real-time monitoring of the milk and intelligently control the milk parameters for production.
+To solve most of the raised weaknesses, we believe that the use of digital twins for the milk tank can be an effective tool.
+In fact, with the use of a digital twin, we can guarantee real-time monitoring of the milk and intelligently control the milk parameters for 
+production.
 Modeling the milk tank with a digital twin leads to the advantage of always having the latest information about the quantity of milk stored,
 which is useful both for planning the reordering of milk and for the production management system.
-In fact, even if there must be a temporary disruption such that the deposit no longer communicates with the rest of the system,
+Even if there must be a temporary disruption such that the tank no longer communicates with the rest of the system,
 the latest information on the quantity of milk stored is still available in the twin.
-In this way we ensure that some of the services continue to function even in the event of temporary failures.
+In this way, we ensure that some of the services continue to work even in the event of temporary failures.
 
-Finally, it is useful to have early warnings in case critical situations occur, such as a pH value that is too high (or too low), or fluctuations in temperature.
+Finally, it is useful to have early warnings in case critical situations occur, such as a pH value that is too high (or too low), or fluctuations in
+temperature.
 In this regard, provision has been made for the digital twin to propagate messages so that timely action can be taken.
 
-The use of digital twin in this scenario is advantageous for several reasons: human intervention to perform milk analysis is minimized as there is
+The use of a digital twin in this scenario is advantageous for several reasons: human intervention to perform milk analysis is minimized as there is
 real-time monitoring of all key parameters, thus reducing the time to go into production.
 As a consequence of real-time analysis, there is a guarantee that the milk used reflects all requirements thus maximizing product quality and yield.
 Also as a consequence of the real-time analysis of all parameters, an alarm system is available to enable timely action to avoid waste and loss of time.
 
 \subsubsection{Thing Model}
 
-\lstinputlisting[caption=Milk tank Thing Model.]{lst/milk-tank.tm.jsonld}
+\lstinputlisting[label={lst:milk-tank-tm},caption={Milk tank Thing Model.}]{lst/milk-tank.tm.jsonld}
 
-Properties: Manufacturer, Serial number, pH, minPH, maxPH, temperature, minTemp, maxTemp, quantityOfmilk
-Events: temperatureOutOfRange, pHoutOfRange
-Actions: Open Valve
+As you can see from the listing~\ref{lst:milk-tank-tm}, two static properties were defined: \textit{serialNo} and \textit{Manufacturer}.
+Those two properties represent the serial number of the tank and the manufacturer, respectively.
+Since those properties come with the tank, they are read-only.
 
-\section{Digital twins for anticipazione guasti}
+Another read-only property is \textit{availableMilk}, which represents the level of milk in the tank. Since the level is calculated directly by the
+tank, it is read-only so that no external operation could alter the value. This property is used directly by the \textit{milk-planning} to
+plan the reordering of milk.
+
+The only available action is \textit{openValve}, which is used to open the valve and start the production process. The action is represented by a boolean value representing the current state of the valve.
+
+This particular digital twin is characterized by the fact that is linked by other two devices: \textit{temperature-sensor} and \textit{ph-sensor}.
+Those two sensors are independent devices that are attached to the tank and are used to monitor the temperature and the pH of the milk.
+In the \textbf{Thing Model} specification the connection is represented by the \texttt{links} construct showing that the ``root thing'' is connected
+with other ``things''.
+This kind of connection enables semantic information about how things are connected and which kinds of relationships occur between them.
+
+The \textit{temperature} sensor defines the following properties: \textit{temperature}, \textit{min-temp} and \textit{max-temp}. The former represents the current temperature from the sensor; the last two properties are useful to define the range of temperature that is considered normal.
+In fact, if the \textit{temperature} value is outside the range defined by \textit{min-temp} and \textit{max-temp}, an alarm is raised through the event \textit{temperature-out-of-range}. The event is annotated with an ontology term that represents the concept of temperature so that a reasoner
+could infer the meaning of the event.
+
+The \textit{ph} sensor is quite similar to the temperature sensor, but it defines the following properties: \textit{ph}, \textit{min-ph} and \textit{max-ph}. The former represents the current pH value from the sensor; the last two properties are useful to define the range of pH that is considered normal. Also the \textit{ph} sensor defines an event \textit{ph-out-of-range} that is raised when the \textit{ph} value is outside the range defined by \textit{min-ph} and \textit{max-ph}.
+The event is annotated with an ontology term that represents the concept of pH so that a reasoner could infer the meaning of the event.
+
 \subsection{Packaging machine}
 \subsubsection{Thing Model}
 Properties: Manufacturer, Serial number, currentBatch, cutterTemperature
