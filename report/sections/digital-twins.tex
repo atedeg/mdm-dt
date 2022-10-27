@@ -96,6 +96,22 @@ The \textit{ph} sensor is quite similar to the temperature sensor, but it define
 The event is annotated with an ontology term that represents the concept of pH so that a reasoner could infer the meaning of the event.
 
 \subsection{Packaging machine}
+During meetings with domain experts, it emerged that the packaging of products is done by automatic machines that pack the cheeses.
+These machines are set up by an operator, and it is not uncommon for mistakes to be made in the setup, which can cause damage to the product or even
+the machine. It has been reported to us that these kinds of machines often break down causing a delay in the packaging line.
+
+Following on from the considerations made earlier, it was studied how through digital twins it is possible to minimize errors made by humans and
+predict breakdowns from machines to intervene promptly and eliminate dead time due to extraordinary machine maintenance.
+
+To solve the problem of human error, we modeled the digital twin so that the system in charge of handling packaged products can interact and set the
+batch to be packaged.
+In this way, we eliminate the human component by reducing the errors that can be made.
+In addition, we can automate the entire process of machine setup, an operation that is currently done by an operator on the machine.
+
+The aspect of reducing time due to maintenance is a crucial aspect that digital twins can solve~\cite{doi:10.1080/0951192X.2019.1686173}.
+Through machine learning techniques and leveraging digital twins, the RUL of the machinery can be determined, all corroborated by simulations that
+signal any impending breakdowns.
+
 \subsubsection{Thing Model}
 Properties: Manufacturer, Serial number, currentBatch, cutterTemperature
 
