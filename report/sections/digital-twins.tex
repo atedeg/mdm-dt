@@ -195,7 +195,7 @@ In the listing~\ref{lst:event-pack}, we can see the events of the digital twin o
 }
 \end{lstlisting}
 
-The events that the packaging machine could emits are distinct in two categories: the first category is related to the state of the machine (\textit{packaging-started}), and the second category is related to the failure of the machine (\textit{packagingMachine-failure} and \textit{package-damaged}). The first event is raised when the machine starts the packaging process, and the second event is raised when the machine fails or the packaging is damaged.
+The events that the packaging machine could emit are distinct in two categories: the first category is related to the state of the machine (\textit{packaging-started}), and the second category is related to the failure of the machine (\textit{packagingMachine-failure} and \textit{package-damaged}). The first event is raised when the machine starts the packaging process, and the second event is raised when the machine fails or the packaging is damaged.
 
 The \textit{packaging-started} event will be used by the service that manages the stock to update the status of the batch that is being packaged.
 This information is useful to keep track of the batches that are being packaged and to know when the packaging process is completed. In this way it
@@ -213,21 +213,135 @@ because is likely that the machine suffers from excessive mechanical stress that
 % tramite algoritmo di machine learning, la macchina predice il guasto e lo comunica tramite alert.
 % I parametri che valuta sono: numero di chiusure al minuto per tipo di prodotto, numero di confezioni danneggiate, temperatura resistenza saldatore (cutter).
 
-\section{Digital twins for quality assurance}
-DT a livello di processo. Quello per la QA(metal detector e scale) viene creato e distrutto all'interno di un ciclo di valutazione di un lotto.
-Si collega ai DT del metal detector e della bilancia per effettuare la QA.
 \subsection{Metal detector}
-\subsubsection{Thing Model}
-Properties: Manufacturer, Serial number, currentBatch
-Events: numberOfDroppedPackages
+A metal detector is an indispensable tool in the quality assurance process, stringent regulations require its use within the packaging line.
+In one of the meetings with domain experts, it emerged that the metal detector is almost isolated in terms of communication with other devices, and
+the data it produces is not integrated into the company's information system.
 
-I parametri sono:
-numero di prodotti rilevati come non conformi appartenenti ad un determinato lotto
+With the use of a digital twin we want on the one hand to better integrate the data that the machinery can produce and on the other hand we
+want it to be able to easily communicate with other machinery in the line.
+
+\subsubsection{Thing Model}
+
+\begin{lstlisting}[caption={Properties of the metal detector Thing Model.},label={lst:prop-metal}]
+"properties": {
+	"manufacturer": {
+		"title": "Manufacturer",
+		"type": "string",
+		"readOnly": true
+	},
+	"serialNo": {
+		"title": "Serial number",
+		"type": "string",
+		"readOnly": true
+	},
+	"currentBatch": {
+		"title": "The current batch",
+		"type": "string"
+	}
+}
+\end{lstlisting}
+
+The digital twin of the metal detector has the same properties as the digital twin of the packaging machine, in particular, it has the \textit{manufacturer} and the \textit{serialNo} of the machine, which are read-only properties; the \textit{currentBatch} property is used to configure the machine so that it knows which batch it has to check. The described properties are represented in the listing~\ref{lst:prop-metal} via the properties
+scope in the thing model specification.
+
+\begin{lstlisting}[caption={Events of the metal detector Thing Model.},label={lst:event-metal}]
+"events": {
+	"dropped-packages": {
+		"title": "The dropped packages",
+		"description": "Is raised when a batch is completed but some packages fail the check.",
+		"type": "object",
+		"properties": {
+			"batch-id": { "type": "string" },
+			"dropped-packages": { "type": "integer" }
+		}
+	}
+}
+\end{lstlisting}
+
+As can be observed in the listing~\ref{lst:event-metal}, the metal detector has only one event, which is raised when a batch is completed but some packages fail the check. This event is captured by the service that manages all the reports to create a report about the dropped packages.
+The event carries information about the batch that has been checked and the number of packages that have been dropped.
+This type of event is captured by the stocking service that determines if the batch is still usable or if it has to be discarded.
+
+This digital twin has no actions because it is not possible to interact with the machine: the machine works in a ``continual flow'' fashion and no human intervention is required. The only configuration that can be done is to set the batch that has to be checked.
 
 \subsection{Scale}
-\subsubsection{Thing Model}
-Properties: Manufacturer, Serial number, currentBatch, meanWeight, stdDevWeight
-Events: numberOfDroppedPackages, batchCompleted
+Just as with the metal detector, the scale is also subject to stringent regulations. The measurement of product weight must meet legal parameters
+outside of which the product cannot be sold.
+A weight below the declared weight would represent fraud against the consumer; conversely, a weight above the declared weight represents a loss for the company.
 
-I parametri sono:
-il lotto corrente, il peso medio per lotto, la deviazione standard per lotto
+Domain experts explained to us that scales can provide reports but these are not integrated with the business information system. Again, digital 
+twins can help integrate such data into the system and interact with the system for storage going in a direction of total automation of the packaging
+line.
+
+\subsubsection{Thing Model}
+
+\begin{lstlisting}[caption={Properties of the scale Thing Model.},label={lst:prop-scale}]
+"properties": {
+	"manufacturer": {
+		"title": "Manufacturer",
+		"type": "string",
+		"readOnly": true
+	},
+	"serialNo": {
+		"title": "Serial number",
+		"type": "string",
+		"readOnly": true
+	},
+	"currentBatch": {
+		"title": "Current Batch",
+		"type": "string",
+		"readOnly": true
+	},
+	"meanWeight": {
+		"title": "Mean weight",
+		"type": "number",
+		"readOnly": true
+	},
+	"stdDevWeight": {
+		"title": "Standard deviation weight",
+		"type": "number",
+		"readOnly": true
+	}
+}
+\end{lstlisting}
+
+The digital twin of the scale has the same properties as the digital twin of the packaging machine, in particular, it has the \textit{manufacturer} and the \textit{serialNo} of the machine, which are read-only properties; the \textit{currentBatch} property is used to configure the machine so that it knows which batch it has to check. The \textit{meanWeight} and \textit{stdDevWeight} properties are used to store the mean and standard deviation of the weight of the packages in the batch. The described properties are represented in the listing~\ref{lst:prop-scale}.
+
+The scale during its operational cycle produces a report that contains the mean and standard deviation of the weight of the packages in the batch. This report is captured by the service that manages all the reports to create a report about the weight of the packages in the batch.
+
+\begin{lstlisting}[caption={Events of the scale Thing Model.},label={lst:event-scale}]
+"events": {
+	"dropped-packages": {
+		"title": "Report the number of dropped packages",
+		"description": "Report the number of too much eavy/light packages that are dropped.",
+		"type": "object",
+		"properties": {
+			"batch-id": { "type": "string" },
+			"dropped-packages": { "type": "integer" }
+		}
+	},
+	"batch-completed": {
+		"title": "Batch is completed",
+		"description": "Report that the scaling of a batch has been completed",
+		"type": "object",
+		"properties": {
+			"completed": { "type": "boolean" },
+			"batch-id": { "type": "string" },
+			"dropped-packages": { "type": "integer" }
+		}
+	}
+}
+\end{lstlisting}
+
+In the listing~\ref{lst:event-scale} are reported the events' definitions: \textit{dropped-packages} and \textit{batch-completed}.
+
+When the scale measures the weight of the packages in the batch, some packages may be too much heavy or too light.
+In this case, the scale drops the packages and raises the \textit{dropped-packages} event.
+This event is captured by the service that manages all the reports to create a report about the dropped packages.
+The event carries information about the batch that has been checked and the number of packages that have been dropped.
+This type of event is captured by the stocking service that determines if the batch is still usable or if it has to be discarded.
+
+When the scale has finished measuring the weight of the packages in the batch, it raises the \textit{batch-completed} event.
+The event carries information about the batch that has been checked and the mean and the dropped packages in the batch.
+The logic about approving o rejecting a batch is delegated to the stocking service.
