@@ -69,7 +69,7 @@ val commonSettings = Seq(
     "io.circe" %% "circe-parser" % "0.14.3",
     "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % "1.0.6",
     "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % "1.0.6",
-    "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % "1.0.6",
+    "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % "1.1.3",
     "com.softwaremill.sttp.tapir" %% "tapir-http4s-client" % "1.0.6",
     "org.typelevel" %% "log4cats-core" % "2.5.0",
     "org.typelevel" %% "log4cats-slf4j" % "2.5.0",
