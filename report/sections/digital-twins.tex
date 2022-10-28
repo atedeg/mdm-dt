@@ -113,17 +113,105 @@ Through machine learning techniques and leveraging digital twins, the RUL of the
 signal any impending breakdowns.
 
 \subsubsection{Thing Model}
-Properties: Manufacturer, Serial number, currentBatch, cutterTemperature
 
-Events: packagingStarted, packagingMachineFailure, packageDamaged,
+\begin{lstlisting}[caption={Properties of the packaging machine Thing Model.},label={lst:prop-pack}]
+"properties": {
+	"manufacturer": {
+		"title": "Manufacturer",
+		"observable": false,
+		"readOnly": true,
+		"type": "string",
+		"forms": []
+	},
+	"serialNo": {
+		"title": "Serial number",
+		"type": "string",
+		"readOnly": true
+	},
+	"currentBatch": {
+		"title": "Current Batch",
+		"type": "string",
+	}
+}
+\end{lstlisting}
 
-Action: startPackaging
+In the listing~\ref{lst:prop-pack}, we can see the properties of the digital twin of the packaging machine. In particular, we define the
+\textit{manufacturer} and the \textit{serialNo} of the machine, which are read-only properties;
+the \textit{currentBatch} represents the current batch that is being packaged, this property will be set by the service used for managing the stock.
+The \textit{currentBatch} property is used by the machine to configure its parameters such as cutting temperature, speed, type of packaging, length
+of the packaging and so on.
+
+The listing~\ref{lst:action-pack} shows the actions of the digital twin of the packaging machine. In particular, we define the \textit{start} action
+which will be used to start the packing process following the parameter set by the \textit{currentBatch} property.
+This action could be triggered by a service that automatically starts the packaging process or reflects the manual intervention of an operator that starts the process manually.
+The \textit{start-packaging} is represented by a boolean value that represents the current state of the machine.
+
+\begin{lstlisting}[caption={Actions of the packaging machine Thing Model.},label={lst:action-pack}]
+"actions": {
+	"start-packaging": {
+		"title": "Start Packaging",
+		"description": "Start (or stop) the packaging machine based on the boolean value",
+		"type": "boolean"
+	}
+}
+\end{lstlisting}
+
+In the listing~\ref{lst:event-pack}, we can see the events of the digital twin of the packaging machine.
+
+\begin{lstlisting}[caption={Events of the packaging machine Thing Model.},label={lst:event-pack}]
+"events": {
+	"packaging-started": {
+		"title": "Packaging Started",
+		"data": {
+			"@type": "Boolean",
+			"title": "Packaging Started",
+			"type": "boolean"
+		}
+	},
+	"packagingMachine-failure": {
+		"title": "Packaging machine failure",
+		"type": "object",
+		"properties": {
+			"batch-id": {
+				"type": "string"
+			},
+			"cutter-temperature": {
+				"type": "integer"
+			}
+		}
+	},
+	"package-damaged": {
+		"title": "Package damaged",
+		"type": "object",
+		"properties": {
+			"batch-id": {
+				"type": "string"
+			},
+			"cutter-temperature": {
+				"type": "integer"
+			}
+		}
+	}
+}
+\end{lstlisting}
+
+The events that the packaging machine could emits are distinct in two categories: the first category is related to the state of the machine (\textit{packaging-started}), and the second category is related to the failure of the machine (\textit{packagingMachine-failure} and \textit{package-damaged}). The first event is raised when the machine starts the packaging process, and the second event is raised when the machine fails or the packaging is damaged.
+
+The \textit{packaging-started} event will be used by the service that manages the stock to update the status of the batch that is being packaged.
+This information is useful to keep track of the batches that are being packaged and to know when the packaging process is completed. In this way it
+is possible to create accurate reports about the packaging process.
+
+The \textit{packagingMachine-failure} event is raised when the machine fails. At the moment this kind of failure is tight only to the cutter temperature because is the main component prone to breakage. This event could (and should) in a realistic scenario be enriched with more information about the failure, such as the exact component that failed, the time of the failure, and so on. In this way, it is possible to create a more accurate digital twin of the machine and to predict the failure of the machine.
+
+The \textit{package-damaged} event is raised when the packaging is damaged. This event is raised when the machine fails to package correctly a cheese in the batch. This event is captured by the service that manages all the reports to create a report about the damaged packages.
+Moreover, the enrichment of this event with additional information about the failure could be useful for the predictive maintenance of the machine
+because is likely that the machine suffers from excessive mechanical stress that reduces the RUL of the machine.
 
 % cutterTemperature viene passato all'algoritmo che in caso di packagingMachineFailure o packageDamaged poi vede che magari la temperatura era troppo alta e capisce qual era il problema
 
-riceve le info su quale lotto deve iniziare a confezionare così da impostare automaticamente i parametri della macchina.
-tramite algoritmo di machine learning, la macchina predice il guasto e lo comunica tramite alert.
-I parametri che valuta sono: numero di chiusure al minuto per tipo di prodotto, numero di confezioni danneggiate, temperatura resistenza saldatore (cutter).
+% riceve le info su quale lotto deve iniziare a confezionare così da impostare automaticamente i parametri della macchina.
+% tramite algoritmo di machine learning, la macchina predice il guasto e lo comunica tramite alert.
+% I parametri che valuta sono: numero di chiusure al minuto per tipo di prodotto, numero di confezioni danneggiate, temperatura resistenza saldatore (cutter).
 
 \section{Digital twins for quality assurance}
 DT a livello di processo. Quello per la QA(metal detector e scale) viene creato e distrutto all'interno di un ciclo di valutazione di un lotto.
