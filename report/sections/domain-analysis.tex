@@ -30,29 +30,72 @@ The \textit{Milk Planning} subdomain is the one that estimates the amount of mil
 This section will describe the digital twins that were chosen to be implemented in the project and the motivations behind the choice of inserting them in this context.
 
 \subsection{Milk Tank Digital Twin}
-The digital twin we individuated for the Milk Planning subdomain is the Milk Tank Digital Twin.
-The main motivation for the adoption of this digital twin is the need to have real-time monitoring of the milk quantity and quality in the tanks.
+Milk storage is a crucial aspect for several reasons: milk yield, product quality, and parameters to be met.
 
-The digital twin will be able to provide the Milk Planning subdomain with information about the milk quantity in the tanks, which will be used to estimate the amount of milk to order each week.
+At present, milk storage management is done manually: once stored, the milk lies until a new production is required.
+Before production begins, an analysis is conducted on the milk to detect its pH, protein level and other parameters.
+In addition to being a cost to the farm, this operation represents a loss of time in cheese production: it takes an operator about thirty minutes to
+perform this kind of analysis.
+Another factor that can affect the quality of milk is temperature changes: continuous temperature changes can alter the structure of milk and be 
+reflected in a lower yield during processing or even in non-use.
+Finally, the integration of milk tanks with the farm information system is absent, so there is no information about the status of stored milk.
+Integration with the cheese processing machinery is partial; in fact, it is an operator who has to issue the start processing command to open the 
+tank valve and then proceed with processing.
 
-Moreover, the tank will provide information about the pH and the temperature of the milk, which will be used to decide if the milk is suitable for the production of a specific cheese.
+To solve most of the raised weaknesses, we believe that the use of digital twins for the milk tank can be an effective tool.
+In fact, with the use of a digital twin, we can guarantee real-time monitoring of the milk and intelligently control the milk parameters for 
+production.
+Modeling the milk tank with a digital twin leads to the advantage of always having the latest information about the quantity of milk stored,
+which is useful both for planning the reordering of milk and for the production management system.
+Even if there must be a temporary disruption such that the tank no longer communicates with the rest of the system,
+the latest information on the quantity of milk stored is still available in the twin.
+In this way, we ensure that some of the services continue to work even in the event of temporary failures.
+
+Finally, it is useful to have early warnings in case critical situations occur, such as a pH value that is too high (or too low), or fluctuations in
+temperature.
+In this regard, provision has been made for the digital twin to propagate messages so that timely action can be taken.
+
+The use of a digital twin in this scenario is advantageous for several reasons: human intervention to perform milk analysis is minimized as there is
+real-time monitoring of all key parameters, thus reducing the time to go into production.
+As a consequence of real-time analysis, there is a guarantee that the milk used reflects all requirements thus maximizing product quality and yield.
+Also as a consequence of the real-time analysis of all parameters, an alarm system is available to enable timely action to avoid waste and loss of time.
 
 \subsection{Packaging Machine Digital Twin}
-The packaging machine is a very important machine in the production process as well as very complex and expensive.
-It is also fairly prone to breakdowns and this can cause a lot of problems in the production process.
+During meetings with domain experts, it emerged that the packaging of products is done by automatic machines that pack the cheeses.
+These machines are set up by an operator, and it is not uncommon for mistakes to be made in the setup, which can cause damage to the product or even
+the machine. It has been reported to us that these kinds of machines often break down causing a delay in the packaging line.
 
-For these reasons, the introduction of a digital twin that can monitor the machine and predict when it will break down can be considered crucial.
+Following on from the considerations made earlier, it was studied how through digital twins it is possible to minimize errors made by humans and
+predict breakdowns from machines to intervene promptly and eliminate dead time due to extraordinary machine maintenance.
+
+To solve the problem of human error, we modeled the digital twin so that the system in charge of handling packaged products can interact and set the
+batch to be packaged.
+In this way, we eliminate the human component by reducing the errors that can be made.
+In addition, we can automate the entire process of machine setup, an operation that is currently done by an operator on the machine.
+
+The aspect of reducing time due to maintenance is a crucial aspect that digital twins can solve~\cite{doi:10.1080/0951192X.2019.1686173}.
+Through machine learning techniques and leveraging digital twins, the RUL of the machinery can be determined, all corroborated by simulations that
+signal any impending breakdowns.
 
 \subsection{Scale Digital Twin}
-We decided to implement a digital twin for the Scale since there are many scenarios in which it could be useful.
+Just as with the metal detector, the scale is also subject to stringent regulations. The measurement of product weight must meet legal parameters
+outside of which the product cannot be sold.
+A weight below the declared weight would represent fraud against the consumer; conversely, a weight above the declared weight represents a loss for the company.
 The scale could be used to monitor the weight of the packages and detect if there are any anomalies. If so, it may be a sign of a problem in the packaging process (e.g. deformed molds).
 
+Domain experts explained to us that scales can provide reports but these are not integrated with the business information system. Again, digital 
+twins can help integrate such data into the system and interact with the system for storage going in a direction of total automation of the packaging
+line.
+
 \subsection{Metal detector Digital Twin}
-The metal detector is a device that is used to detect metal objects in packages. It is used to ensure that the packages are free of metal objects, which could be dangerous for the consumer.
-The digital twin of the metal detector will be able to detect if there are any anomalies in the packages.
+A metal detector is an indispensable tool in the quality assurance process, stringent regulations require its use within the packaging line.
+In one of the meetings with domain experts, it emerged that the metal detector is almost isolated in terms of communication with other devices, and
+the data it produces is not integrated into the company's information system.
 
 The detection of metallic components is, however, very rare and could imply that the machine to make cheese might have deteriorated. So, along with checking the batch where the anomaly is detected, a check of the machine could also be performed.
 
+With the use of a digital twin we want on the one hand to better integrate the data that the machinery can produce and on the other hand we
+want it to be able to easily communicate with other machinery in the line.
 
 \section{Supporting bounded contexts}
 Having introduced digital twins we noticed that other subdomains or bounded contexts were needed in order to support their functioning.
