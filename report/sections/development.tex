@@ -99,7 +99,8 @@ In tables \ref{tab:ditto-wot-thing} and \ref{tab:ditto-wot-feature} we can see t
     \label{tab:ditto-wot-feature}
 \end{table}
 
-\section{Handlers implementation}
+\section{Implementation}
+\subsection{Handlers}
 The code base of the project is written in \textit{Scala 3} using a monadic approach.
 
 In fact, all domain actions take advantage of a monadic encoding of side effects, ranging from failure with an exception, to emitting events, to reading an immutable global state.
@@ -135,7 +136,7 @@ def packagingMachineFailureHandler[M[_]: Monad: LiftIO: CanRaise[String]](
   yield ()
 \end{lstlisting}
 
-\section{DTOs implementation}
+\subsection{DTOs implementation}
 All events are represented with external entities that need to be transformed into domain entities.
 This was done by implementing a set of DTOs (Data Transfer Objects) for each event, which is used to validate the incoming events and transform them into domain entities.
 
@@ -148,7 +149,7 @@ object PackagingMachineMaintenanceDTO:
 
 \end{lstlisting}
 
-\section{REST API}
+\subsection{REST API}
 We exploited Ditto's sandbox for our digital twins and this comes with a well-documented REST API.
 This allowed us to interact with the digital twins in a standard way enhancing the interoperability between different systems.
 This is one of the most important features that Ditto provides since, other than the fact that it is a standard for client-side applications, it is also easy to use from the side of the industrial machine.
