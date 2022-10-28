@@ -32,12 +32,15 @@ This section will describe the digital twins that were chosen to be implemented 
 \subsection{Milk Tank Digital Twin}
 The digital twin we individuated for the Milk Planning subdomain is the Milk Tank Digital Twin.
 The main motivation for the adoption of this digital twin is the need to have real-time monitoring of the milk quantity and quality in the tanks.
+
 The digital twin will be able to provide the Milk Planning subdomain with information about the milk quantity in the tanks, which will be used to estimate the amount of milk to order each week.
+
 Moreover, the tank will provide information about the pH and the temperature of the milk, which will be used to decide if the milk is suitable for the production of a specific cheese.
 
 \subsection{Packaging Machine Digital Twin}
 The packaging machine is a very important machine in the production process as well as very complex and expensive.
 It is also fairly prone to breakdowns and this can cause a lot of problems in the production process.
+
 For these reasons, the introduction of a digital twin that can monitor the machine and predict when it will break down can be considered crucial.
 
 \subsection{Scale Digital Twin}
@@ -47,7 +50,8 @@ The scale could be used to monitor the weight of the packages and detect if ther
 \subsection{Metal detector Digital Twin}
 The metal detector is a device that is used to detect metal objects in packages. It is used to ensure that the packages are free of metal objects, which could be dangerous for the consumer.
 The digital twin of the metal detector will be able to detect if there are any anomalies in the packages.
-The detection of metallic components is however very rare and could imply that the machine to make cheese might have deteriorated. So, along with checking the batch where the anomaly is detected, a check of the machine could also be performed.
+
+The detection of metallic components is, however, very rare and could imply that the machine to make cheese might have deteriorated. So, along with checking the batch where the anomaly is detected, a check of the machine could also be performed.
 
 
 \section{Supporting bounded contexts}
@@ -60,11 +64,14 @@ In particular, we identified the following bounded contexts:
 \end{itemize}
 
 The \textit{Alerts} bounded context is responsible for collecting the fault messages coming from the digital twins, storing them and notifying the responsible people.
-For instance, \textit{Milk Tank} would notify any anomaly in the milk quality (pH or temperature values out of range).
+
+For instance, \textit{Milk Tank} would notify any anomaly in the milk quality (pH or temperature values out of range);
 \textit{Packaging Machine} would notify any anomaly in the machine status (e.g. a broken part) and \textit{Scale} and \textit{Metal Detector} would notify any anomaly in the weight or the presence of metal.
+
 The \textit{Maintenance} bounded context was mainly introduced to predict the maintenance of the Packaging Machine digital twin but its use could be extended to other machines.
 
-Finally, the \textit{Reporting} bounded context was introduced to collect the reports sent by the Scale and the Metal Detector digital twins and to do some basic analysis on this data. This bounded context will be outsourced to a third-party company.
+Finally, the \textit{Reporting} bounded context was introduced to collect the reports sent by the Scale and the Metal Detector digital twins and to do some basic analysis on this data.
+Given its simplicity and the fact that it doesn't add business differentiation, this bounded context will be outsourced to a third-party company.
 
 The figure\ref{img:subdomains-dt} shows the bounded contexts and the digital twins that interact with them.
 
