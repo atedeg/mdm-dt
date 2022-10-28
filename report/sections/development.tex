@@ -2,8 +2,8 @@
 In this section, we will describe the development process of the project. We will start by describing the usage od Eclipse Ditto and its integration with the Web Of Things, then we will describe some programming choices for the development of the project.
 
 \section{Eclipse Ditto}
-Ditto is an open-source technology for build simple digital twins that are mirroring some device.
-The technology mirrors potentially millions and billions of digital twins residing in the digital world with physical “Things”.
+Ditto is an open-source technology for building simple digital twins that are mirroring some device.
+The technology potentially mirrors millions and billions of digital twins residing in the digital world with physical “Things”.
 This simplifies developing IoT solutions since there is no need to know how the physical “Things” are connected:
 a thing can just be used as any other web service via its digital twin.
 
@@ -11,8 +11,9 @@ As other digital twins platforms (e.g. Microsoft Azure Digital Twins), Ditto is 
 In fact, this provides a common way to describe information and actions to interact with the digital twins without knowing the technology used to model them.
 
 \section{The Web of Things integration}
-Even though Ditto provides its own language to describe digital twins, since version 2.4.0 (active by default starting with Ditto version 3.0.0) they added support for W3C WoT (Web Of things) by referencing WoT Thing Model in Ditto managed twins describing the Things' capabilities.
-Using this integration, Ditto managed digital twins can be linked to WoT ``Thing Models'' from which Ditto can create WoT “Thing Descriptions” containing the API descriptions of the twins.
+Even though Ditto provides its own language to describe digital twins  since version 2.4.0 (active by default with Ditto 3.0.0) they added support for W3C WoT (Web Of things) by referencing WoT Thing Model in Ditto managed twins for describing the Things' capabilities.
+Using this integration, Ditto-managed digital twins can be linked to WoT ``Thing Models'' from which Ditto can create WoT “Thing Descriptions” containing the API descriptions of the twins.
+
 As they declared in their website\footnote{\url{https://www.eclipse.org/ditto/2022-03-03-wot-integration.html}}, this integration takes a big step forward towards:
 \begin{itemize}
     \item increased interoperability
@@ -23,20 +24,20 @@ As they declared in their website\footnote{\url{https://www.eclipse.org/ditto/20
     \item opening the door to a new ecosystem of tools
 \end{itemize}
 
-The idea of the thing description is that a device (or e.g. a digital twin service acting as intermediate) describes in a standardized way which capabilities in form of \textbf{properties}, \textbf{actions} and \textbf{events} a Thing provides and which input/output can be expected when interacting with the Thing.
-A TD contains so called \textbf{forms} for the mentioned interaction capabilities which map those rather abstract concepts to actual endpoints, e.g. to HTTP endpoints, HTTP verbs and HTTP headers etc. but also other protocol bindings e.g. MQTT or CoAP.
+The idea of the thing description is that a device (or e.g. a digital twin service acting as intermediate) describes in a standardized way which capabilities in form of \textbf{properties}, \textbf{actions} and \textbf{events} a Thing provides and which input/output can be expected when interacting with it.
+A TD contains the so-called \textbf{forms} for the mentioned interaction capabilities which map those rather abstract concepts to actual endpoints, e.g. to HTTP endpoints, HTTP verbs and HTTP headers etc. but also other protocol bindings e.g. MQTT or CoAP.
 
-The benefits of this integration we exploited (among many others) are:
+For this project, we exploited some of the benefits of this integration:
 \begin{itemize}
-    \item possibility to define model for data (Ditto Thing attributes + Ditto Feature properties)
-    \item possibility to define model for messages
-    \item capability to provide semantic context (using JSON-LD), e.g. by referencing to existing ontologies
-    \item Ditto managed twins can describe themselves if backed by a WoT Thing Model, the twin can tell you (when asking for Accept: application/td+json concent-type) exactly what it is capable of and which HTTP endpoints to invoke to access data / send messages
+    \item possibility to define a model for data (Ditto Thing attributes + Ditto Feature properties)
+    \item possibility to define a model for messages
+    \item capability to provide semantic context (using JSON-LD), e.g. by referencing existing ontologies
+    \item Ditto-managed twins can describe themselves if backed by a WoT Thing Model; the twin can tell you (when asking for Accept: application/td+json content-type) exactly what it is capable of and which HTTP endpoints to invoke to access data / send messages
     \item utilization of the tooling landscape / open ecosystem evolving around the WoT standard, e.g.:
-    the Eclipse edi{TD}or online-editor for WoT TDs and TMs
+    the Eclipse edi{TD}or online editor for WoT TDs and TMs
 \end{itemize}
 
-In tables \ref{tab:ditto-wot-thing} and \ref{tab:ditto-wot-feature} we can see the mapping between Ditto and WoT.
+In tables \ref{tab:ditto-wot-thing} and \ref{tab:ditto-wot-feature} we can see the mappings of the concepts between Ditto and WoT.
 
 \begin{table}[H]
     \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
@@ -66,26 +67,29 @@ In tables \ref{tab:ditto-wot-thing} and \ref{tab:ditto-wot-feature} we can see t
 \end{table}
 
 \section{Handlers implementation}
-All domain actions take advantage of a monadic encoding of side effects, ranging from failure with an exception, to emitting events, to reading an immutable global state.
-The same approach were applied to the handlers implementation for the domain events.
+The code base of the project is written in \textit{Scala 3} using a monadic approach.
 
+In fact, all domain actions take advantage of a monadic encoding of side effects, ranging from failure with an exception, to emitting events, to reading an immutable global state.
+The same approach was applied to the handler's implementation for the domain events.
 
-A code example of the handler of the Packaging Machine Failure event, implemented in the \texttt{Alerts} bounded context:
+An example of such handlers can be found below.
 
 \begin{lstlisting}[language=Scala]
-    def handlePackagingMachineFailureEvent[M[_]: Monad: LiftIO: CanRaise[String]](
-        event: PackagingMachineFailedDTO,
-    ): M[Unit] =
-      for
-        r <- validate(event)
-        message = managePackagingMachineFailure(PackagingMachineFailure(LocalTime.now(), r.batchID, r.cutterTemperature))
-        _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
-        _ <- sendEmail(message)
-      yield ()
+  def handlePackagingMachineFailureEvent[M[_]: Monad: LiftIO: CanRaise[String]](
+      event: PackagingMachineFailedDTO,
+  ): M[Unit] =
+    for
+      r <- validate(event)
+      message = managePackagingMachineFailure(PackagingMachineFailure(LocalTime.now(), r.batchID, r.cutterTemperature))
+      _ <- IO.println("Sending an e-mail to the admin...").liftIO[M]
+      _ <- sendEmail(message)
+    yield ()
 \end{lstlisting}
 
+Implemented in the \texttt{Alerts} bounded context, the code of the handler of the Packaging Machine Failure event, validates the incoming event, converting the concept coming from another bounded context into a domain concept, then it calls the domain action \texttt{managePackagingMachineFailure} which will properly manage the failure and finally sends an email to the maintenance team with the resulting content of the action.
 
-A code example of the handler in the \texttt{Maintenance} bounded context, representing the storage of the failure event in the database:
+Another code example of a handler can be found in the \texttt{Maintenance} bounded context.
+This represents the storage of the failure event in the database:
 
 \begin{lstlisting}[language=Scala]
 def packagingMachineFailureHandler[M[_]: Monad: LiftIO: CanRaise[String]](
