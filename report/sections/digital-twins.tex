@@ -31,7 +31,7 @@ manipulate as well as make considerations about the strategic impact they have o
 Following the domain analysis with experts, we focused on what were the most critical parts of the whole process of making cheese.
 This analysis showed that the steps that affect productivity the most are product packaging and the related quality assurance process.
 
-Domain experts also explained to us how milk maintenance is critical, and currently, no system monitors its status in real-time.
+Domain experts also explained to us how milk quality is critical, and currently, no system monitors its status in real-time.
 Ad-hoc analyses are done before each production to verify the goodness of the milk to be used in production.
 In this regard, it would be good to have a system in place that monitors milk values in real-time so that action can be taken if the need arises,
 thus avoiding analysis before using it for production.
@@ -95,6 +95,9 @@ This kind of connection enables semantic information about how things are connec
 The \textit{temperature} sensor defines the following properties: \textit{temperature}, \textit{min-temp} and \textit{max-temp}. The former represents the current temperature from the sensor; the last two properties are useful to define the range of temperature that is considered normal.
 In fact, if the \textit{temperature} value is outside the range defined by \textit{min-temp} and \textit{max-temp}, an alarm is raised through the event \textit{temperature-out-of-range}. The event is annotated with an ontology term that represents the concept of temperature so that a reasoner
 could infer the meaning of the event.
+
+The temperature sensor is represented as a separate thing model. This enables us to reuse the same definition for other devices, for example for the
+cutter of the \textit{packaging-machine}. In this way, we can reuse the same definition for different devices and avoid duplication of models.
 
 The \textit{ph} sensor is quite similar to the temperature sensor, but it defines the following properties: \textit{ph}, \textit{min-ph} and \textit{max-ph}. The former represents the current pH value from the sensor; the last two properties are useful to define the range of pH that is considered normal. Also the \textit{ph} sensor defines an event \textit{ph-out-of-range} that is raised when the \textit{ph} value is outside the range defined by \textit{min-ph} and \textit{max-ph}.
 The event is annotated with an ontology term that represents the concept of pH so that a reasoner could infer the meaning of the event.
