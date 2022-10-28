@@ -1,7 +1,14 @@
 \chapter{Conclusions}
-Considerazioni su utilizzo di ddd per dt:
-il ddd si sposa bene con i concetti specifici del dominio.
-nel nostro ambito i dt sono fortemente correlati ai macchinari che quindi non ricadono negli elementi
-caratterizzanti del dominio pertanto le tecniche ddd non applicabili per modellare i dt.
-tuttavia modellare con tecniche ddd tutto il dominio si ha maggiore conoscenza del dominio e aiutano ad individuare
-punti dove potenzialmente possono essere impiegati i dt per supportare i processi e i bounded contexts.
+This project allowed us to put Domain Driven Design methodologies into practice to develop a state-of-the-art system that brings potential benefit to the company. The ambition of the project was also to understand how such methodologies can lend themselves to modeling digital twins to support domain-defined processes.
+
+Although DDD methodologies have proven to be useful and strategic for modeling the domain, these features have come somewhat short in modeling digital twins. We soon realized that in this particular domain digital twins are particularly coupled with devices and machinery for cheese production and packaging, domain experts did not always know the details of how the machinery works, frustrating some DDD-defined methodologies, such as event storming. Moreover, domain experts do not perceive Digital Twins since their conception is to support processes by improving them. However, knowledge crunching sessions allowed us to understand the domain in depth and identify weaknesses in current processes rather well and identify where and how digital twins could be a real advantage.
+
+DDD methodologies, on the other hand, proved to be critical in managing the relationships between digital twins and the various bounded contexts that emerged in the early design phases. We proceeded by modeling the digital twins as if they were external bounded contexts and then defining the relationships that exist between them. This has, from our point of view, simplified the way bounded contexts and digital twins communicate. Furthermore, by exploiting the principle of DTOs we integrated the information in the digital twins with the concepts proper to each bounded context avoiding inconsistent states or domain corruption.
+
+This project allowed us to delve into technologies such as Eclipse Ditto, examining its architecture the main functionalities as well as verifying its operation in a real scenario such as the dairy.
+We familiarized ourselves with the WoT specification for modeling objects, in particular, we took advantage of the Thing Model specification that integrates seamlessly with Eclipse Ditto by automatically generating a Thing Description for each instance of a digital twin, eliminating any possible error derived from duplication of models.
+The models created were annotated with specific ontologies to enable a semantic layer, useful for making logical inferences and deriving further information.
+
+Despite the limited time, the results obtained were more than satisfactory. At the end of the project, the prototype was shown to domain experts who were positively surprised and glimpsed the potential of the system thus modeled. In conclusion, we are satisfied with both the results obtained and the feedback received, as well as having learned new insights about the world of digital twins and DDD.
+
+\section{Future works}
