@@ -11,6 +11,10 @@ slide_number = true
 width = "1440"
 height = "900"
 
+[params.reveal_hugo.custom_theme_options]
+  targetPath = "css/custom-theme.css"
+  enableSourceMap = true
+
 [markup.goldmark.renderer]
 unsafe = true
 
