@@ -11,28 +11,28 @@ a thing can just be used as any other web service via its digital twin.
 \subsection{Ditto's architecture}
 Ditto consists of multiple ``microservices'' each of which is defined by:
 \begin{itemize}
-  \item its own data store which only this microservice may access and write to
-  \item an API in form of signals (commands, command responses, events)
-  \item can be accessed by other services only via the defined signals
+	\item its own data store which only this microservice may access and write to
+	\item an API in form of signals (commands, command responses, events)
+	\item can be accessed by other services only via the defined signals
 \end{itemize}
 All microservices can communicate asynchronously in a Ditto cluster (via Akka Remoting).
 
-In figure\ref{fig:ditto-architecture} can be seen the architecture of Ditto and its components.
+In figure~\ref{fig:ditto-architecture} can be seen the architecture of Ditto and its components.
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=0.7\textwidth]{img/ditto-architecture.png}
-  \caption{Ditto architecture}
-  \label{fig:ditto-architecture}
+	\centering
+	\includegraphics[width=0.7\textwidth]{img/ditto-architecture.png}
+	\caption{Ditto architecture}
+	\label{fig:ditto-architecture}
 \end{figure}
 
 The components of Ditto are:
 \begin{itemize}
-  \item Policies: manages persistence and enforcement (authorization) of Policies
-  \item Things: manages persistence and enforcement (authorization) of Things and Features
-  \item Things-Search: that tracks changes to Things, Features, Policies and updates an optimized search index. Also executes queries on this search index
-  \item Gateway: that provides HTTP and WebSocket API
-  \item Connectivity: that manages the persistence of Connections as well as sends Ditto Protocol messages to external message brokers and receives messages from them
+	\item Policies: manages persistence and enforcement (authorization) of Policies
+	\item Things: manages persistence and enforcement (authorization) of Things and Features
+	\item Things-Search: that tracks changes to Things, Features, Policies and updates an optimized search index. Also executes queries on this search index
+	\item Gateway: that provides HTTP and WebSocket API
+	\item Connectivity: that manages the persistence of Connections as well as sends Ditto Protocol messages to external message brokers and receives messages from them
 \end{itemize}
 
 \newpage
@@ -46,12 +46,12 @@ Using this integration, Ditto-managed digital twins can be linked to WoT ``Thing
 
 As they declared in their website\footnote{\url{https://www.eclipse.org/ditto/2022-03-03-wot-integration.html}}, this integration takes a big step forward towards:
 \begin{itemize}
-    \item increased interoperability
-    \item introspection of twins to find out their capabilities
-    \item addition of semantic context to Ditto managed digital twins and their capabilities
-    \item description of Ditto twin HTTP APIs in an open, established, well specified, ``web optimized'', active IoT standard
-    \item backing Ditto managed twins with WoT models, also supporting ``brownfield'' setups, without the need for actual devices to be aware of WoT
-    \item opening the door to a new ecosystem of tools
+	\item increased interoperability
+	\item introspection of twins to find out their capabilities
+	\item addition of semantic context to Ditto managed digital twins and their capabilities
+	\item description of Ditto twin HTTP APIs in an open, established, well specified, ``web optimized'', active IoT standard
+	\item backing Ditto managed twins with WoT models, also supporting ``brownfield'' setups, without the need for actual devices to be aware of WoT
+	\item opening the door to a new ecosystem of tools
 \end{itemize}
 
 The idea of the thing description is that a device (or e.g. a digital twin service acting as intermediate) describes in a standardized way which capabilities in form of \textbf{properties}, \textbf{actions} and \textbf{events} a Thing provides and which input/output can be expected when interacting with it.
@@ -59,41 +59,41 @@ A TD contains the so-called \textbf{forms} for the mentioned interaction capabil
 
 For this project, we exploited some of the benefits of this integration:
 \begin{itemize}
-    \item possibility to define a model for data (Ditto Thing attributes + Ditto Feature properties)
-    \item possibility to define a model for messages
-    \item capability to provide semantic context (using JSON-LD), e.g. by referencing existing ontologies
-    \item Ditto-managed twins can describe themselves if backed by a WoT Thing Model; the twin can tell you (when asking for Accept: application/td+json content-type) exactly what it is capable of and which HTTP endpoints to invoke to access data / send messages
-    \item utilization of the tooling landscape / open ecosystem evolving around the WoT standard, e.g.:
-    the Eclipse edi{TD}or online editor for WoT TDs and TMs
+	\item possibility to define a model for data (Ditto Thing attributes + Ditto Feature properties)
+	\item possibility to define a model for messages
+	\item capability to provide semantic context (using JSON-LD), e.g. by referencing existing ontologies
+	\item Ditto-managed twins can describe themselves if backed by a WoT Thing Model; the twin can tell you (when asking for Accept: application/td+json content-type) exactly what it is capable of and which HTTP endpoints to invoke to access data / send messages
+	\item utilization of the tooling landscape / open ecosystem evolving around the WoT standard, e.g.:
+	      the Eclipse edi{TD}or online editor for WoT TDs and TMs
 \end{itemize}
 
 In tables \ref{tab:ditto-wot-thing} and \ref{tab:ditto-wot-feature} we can see the mappings of the concepts between Ditto and WoT.
 
 \begin{table}[H]
-    \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
-    \hline
-    \textbf{WoT element} & \textbf{Ditto concept} \\ \hline
-    Thing & Ditto Thing\\ \hline
-    Properties & Thing attributes\\ \hline
-    Actions & Thing messages with Direction to (messages in the ``inbox'') of a Thing ID.\\ \hline
-    Events & 	Thing messages with Direction from (messages in the ``outbox'') of a Thing ID.\\ \hline
-    Composition via tm:submodule & Thing features representing different aspects of a Ditto Thing.\\ \hline
-    \end{tabular}
-    \caption{Mapping between Ditto and WoT for the ``Thing'' level}
-    \label{tab:ditto-wot-thing}
+	\begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+		\hline
+		\textbf{WoT element}         & \textbf{Ditto concept}                                                         \\ \hline
+		Thing                        & Ditto Thing                                                                    \\ \hline
+		Properties                   & Thing attributes                                                               \\ \hline
+		Actions                      & Thing messages with Direction to (messages in the ``inbox'') of a Thing ID.    \\ \hline
+		Events                       & Thing messages with Direction from (messages in the ``outbox'') of a Thing ID. \\ \hline
+		Composition via tm:submodule & Thing features representing different aspects of a Ditto Thing.                \\ \hline
+	\end{tabular}
+	\caption{Mapping between Ditto and WoT for the ``Thing'' level}
+	\label{tab:ditto-wot-thing}
 \end{table}
 
 \begin{table}[H]
-    \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
-    \hline
-    \textbf{WoT element} & \textbf{Ditto concept} \\ \hline
-    Thing & Feature. In Ditto, a Feature is an aspect of a Ditto Thing. As the Feature is defined by its properties and messages it supports, it maps to a WoT Thing. \\ \hline
-    Properties & Feature properties \\ \hline
-    Actions &	Feature messages with Direction to (messages in the ``inbox'') of a Thing ID + Feature ID combination. \\ \hline
-    Events &	Feature messages with Direction from (messages in the ``outbox'') of a Thing ID + Feature ID combination. \\ \hline
-    \end{tabular}
-    \caption{Mapping between Ditto and WoT for the ``Feature'' level}
-    \label{tab:ditto-wot-feature}
+	\begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+		\hline
+		\textbf{WoT element} & \textbf{Ditto concept}                                                                                                                                    \\ \hline
+		Thing                & Feature. In Ditto, a Feature is an aspect of a Ditto Thing. As the Feature is defined by its properties and messages it supports, it maps to a WoT Thing. \\ \hline
+		Properties           & Feature properties                                                                                                                                        \\ \hline
+		Actions              & Feature messages with Direction to (messages in the ``inbox'') of a Thing ID + Feature ID combination.                                                    \\ \hline
+		Events               & Feature messages with Direction from (messages in the ``outbox'') of a Thing ID + Feature ID combination.                                                 \\ \hline
+	\end{tabular}
+	\caption{Mapping between Ditto and WoT for the ``Feature'' level}
+	\label{tab:ditto-wot-feature}
 \end{table}
 
 \newpage
