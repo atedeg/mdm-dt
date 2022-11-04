@@ -18,7 +18,7 @@ The DTA is the aggregation of DTIs whose data and information can be used for in
 The specific information contained in the digital twins is driven by use cases.
 
 In this project, we dealt mainly with DTI because of the industrial and manufacturing nature of the case study.
-However, we believe that the use and modeling of DTA-type digital twins can contribute more to improve the quality and production efficiency of products.
+However, we believe that the use and modeling of DTA-type digital twins could be useful to improve the quality and production efficiency of products.
 
 DTA-type digital twins were not examined in this project because of the current limitations of digital twin-enabling platforms.
 We are not aware of any platforms that natively model the concept of digital twin aggregation, so for the sake of simplicity, we decided not to implement such a concept.
@@ -39,11 +39,11 @@ thus avoiding analysis before using it for production.
 
 As a result of the considerations and weaknesses raised by domain experts, we identified the following digital twins:
 \textit{milk-tank} that monitors the parameters of the stored milk; \textit{packing-machine} that monitors the parameters that are then used to carry
-out predictive maintenance; and finally \textit{metal-detector} and \textit{scales} to detect contamination in the product and defects in product weight, respectively.
+out predictive maintenance; and finally, \textit{metal-detector} and \textit{scales} to improve the quality assurance process by detecting contamination in products and defects in product weight, respectively.
 
 \subsection{Milk Tank}
 As mentioned earlier, the digital twin we individuated for the Milk Planning subdomain is the Milk Tank Digital Twin.
-The adoption of this digital twin is the need to have real-time monitoring of the milk quantity and quality in the tanks.
+The need for the adoption of this digital twin is to have real-time monitoring of the milk quantity and quality in the tanks.
 The digital twin will be able to provide the Milk Planning subdomain with information about the milk quantity in the tanks, which will be used to estimate the amount of milk to order each week.
 
 Moreover, the tank will provide information about the pH and the temperature of the milk, which will be used to decide if the milk is suitable for the production of a specific cheese.
@@ -76,7 +76,7 @@ could infer the meaning of the event.
 The temperature sensor is represented as a separate thing model. This enables us to reuse the same definition for other devices, for example for the
 cutter of the \textit{packaging-machine}. In this way, we can reuse the same definition for different devices and avoid duplication of models.
 
-The \textit{ph} sensor is quite similar to the temperature sensor, but it defines the following properties: \textit{ph}, \textit{min-ph} and \textit{max-ph}. The former represents the current pH value from the sensor; the last two properties are useful to define the range of pH that is considered normal. Also the \textit{ph} sensor defines an event \textit{ph-out-of-range} that is raised when the \textit{ph} value is outside the range defined by \textit{min-ph} and \textit{max-ph}.
+The \textit{ph} sensor is quite similar to the temperature sensor, but it defines the following properties: \textit{ph}, \textit{min-ph} and \textit{max-ph}. The former represents the current pH value from the sensor; the latter two properties are useful to define the range of pH that is considered normal. Also the \textit{ph} sensor defines an event \textit{ph-out-of-range} that is raised when the \textit{ph} value is outside the range defined by \textit{min-ph} and \textit{max-ph}.
 The event is annotated with an ontology term that represents the concept of pH so that a reasoner could infer the meaning of the event. 
 
 \subsection{Packaging machine}
@@ -230,7 +230,7 @@ scope in the thing model specification.
 
 As can be observed in the listing~\ref{lst:event-metal}, the metal detector has only one event, which is raised when a batch is completed but some packages fail the check. This event is captured by the service that manages all the reports to create a report about the dropped packages.
 The event carries information about the batch that has been checked and the number of packages that have been dropped.
-This type of event is captured by the stocking service that determines if the batch is still usable or if it has to be discarded.
+This kind of event is captured by the stocking service that determines if the batch is still usable or if it has to be discarded.
 
 This digital twin has no actions because it is not possible to interact with the machine: the machine works in a ``continual flow'' fashion and no human intervention is required. The only configuration that can be done is to set the batch that has to be checked.
 
