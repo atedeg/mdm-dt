@@ -129,6 +129,8 @@ The \textit{start-packaging} is represented by a boolean value that represents t
 }
 \end{lstlisting}
 
+\newpage
+
 In the listing~\ref{lst:event-pack}, we can see the events of the digital twin of the packaging machine.
 
 \begin{lstlisting}[caption={Events of the packaging machine Thing Model.},label={lst:event-pack}]
@@ -214,6 +216,8 @@ The digital twin of the metal detector will be able to detect if there are any a
 The digital twin of the metal detector has the same properties as the digital twin of the packaging machine, in particular, it has the \textit{manufacturer} and the \textit{serialNo} of the machine, which are read-only properties; the \textit{currentBatch} property is used to configure the machine so that it knows which batch it has to check. The described properties are represented in the listing~\ref{lst:prop-metal} via the properties
 scope in the thing model specification.
 
+\newpage
+
 \begin{lstlisting}[caption={Events of the metal detector Thing Model.},label={lst:event-metal}]
 "events": {
 	"dropped-packages": {
@@ -233,6 +237,8 @@ The event carries information about the batch that has been checked and the numb
 This kind of event is captured by the stocking service that determines if the batch is still usable or if it has to be discarded.
 
 This digital twin has no actions because it is not possible to interact with the machine: the machine works in a ``continual flow'' fashion and no human intervention is required. The only configuration that can be done is to set the batch that has to be checked.
+
+\newpage
 
 \subsection{Scale}
 We decided to implement a digital twin for the Scale that detects underweight and overweight packages.
@@ -273,6 +279,8 @@ It supports the Stocking B.C. in the quality assurance process.
 The digital twin of the scale has the same properties as the digital twin of the packaging machine, in particular, it has the \textit{manufacturer} and the \textit{serialNo} of the machine, which are read-only properties; the \textit{currentBatch} property is used to configure the machine so that it knows which batch it has to check. The \textit{meanWeight} and \textit{stdDevWeight} properties are used to store the mean and standard deviation of the weight of the packages in the batch. The described properties are represented in the listing~\ref{lst:prop-scale}.
 
 The scale during its operational cycle produces a report that contains the mean and standard deviation of the weight of the packages in the batch. This report is captured by the service that manages all the reports to create a report about the weight of the packages in the batch.
+
+\newpage
 
 \begin{lstlisting}[caption={Events of the scale Thing Model.},label={lst:event-scale}]
 "events": {
