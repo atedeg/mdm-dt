@@ -1,0 +1,20 @@
+baseURL = 'https://atedeg.dev/mdm-dt/'
+languageCode = 'en-us'
+title = 'My New Hugo Site'
+
+theme = "reveal-hugo"
+
+[params.reveal_hugo]
+custom_theme = "custom-theme.scss"
+custom_theme_compile = true
+slide_number = true
+width = "1440"
+height = "900"
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[outputFormats.Reveal]
+baseName = "index"
+mediaType = "text/html"
+isHTML = true

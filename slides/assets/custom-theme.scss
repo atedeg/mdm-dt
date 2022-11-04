@@ -1,0 +1,82 @@
+@import "reveal-js/css/theme/template/mixins";
+@import "reveal-js/css/theme/template/settings";
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+$backgroundColor: #fdf7e9;
+
+$mainColor: #55303e;
+$headingColor: #55303e;
+
+$mainFontSize: 2em;
+$mainFont: 'Inter', Helvetica, sans-serif;
+$headingFont: 'Inter', Helvetica, sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: uppercase;
+$headingFontWeight: 600;
+$linkColor: #ff3c3e;
+$linkColorHover: #f9b59c; //lighten($linkColor, 15%);
+$selectionBackgroundColor: #f9b59c; //lighten($linkColor, 25%);
+
+$heading1Size: 2.5em;
+$heading2Size: 1.6em;
+$heading3Size: 1.3em;
+$heading4Size: 1.0em;
+
+@import "reveal-js/css/theme/template/theme";
+
+.reveal strong,
+.reveal b {
+    font-weight: bold;
+    color: #9f0000
+}
+
+.reveal em {
+    font-style: italic;
+    color: #006900
+}
+
+.column {
+    float: left;
+    width: 100%;
+}
+
+.miraImg {
+    height: 800px;
+}
+
+.multiCol {
+    display: table;
+    table-layout: fixed; // don't fudge depending on content
+    width: 100%;
+    text-align: left; // matter of taste, makes imho sense
+
+    .col {
+        display: table-cell;
+        vertical-align: top;
+        width: 50%;
+        margin: auto;
+        padding: 2% 0 5% 5%; // some vertical, and between columns
+
+        &:first-of-type {
+            padding-left: 0;
+        }
+
+        // there's nothing before col1
+    }
+}
+
+.reveal section img {
+    border: 0em;
+    box-shadow: none;
+    max-width: 100%;
+    max-height: 23em;
+    height: auto;
+    object-fit: contain;
+}
+
+.reveal section img {
+    border: 0em;
+    box-shadow: none;
+}
