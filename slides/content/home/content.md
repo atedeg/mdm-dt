@@ -587,6 +587,7 @@ The complete _Web Thing Model_ is available [here](https://github.com/atedeg/mdm
 The _Scale Digital Twin_ has interactions with the **Stocking**, **Alert** and **Reporting** bounded context.
 
 {{< mermaid >}}
+%%{init: {"theme": "default", 'themeVariables': { 'fontFamily': 'Inter' }}}%%
 flowchart TD
   dt([Scale\nDigital Twin]) == batch-completed ==> stocking[Stocking\nBounded Context]
   dt == dropped-packages ==> alert[Alert\nBounded Context]

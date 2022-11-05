@@ -80,3 +80,18 @@ $heading4Size: 1.0em;
     border: 0em;
     box-shadow: none;
 }
+
+.label foreignObject {
+    font-size: 60%;
+    overflow: visible;
+}
+
+.mermaid svg {
+	max-width: 100% !important;
+	max-height: 43vh !important;
+	height: 20%;
+	width: 100vw;
+	transition: transform 0.3s ease;
+	border-width: 0.1em;
+	border-style: none;
+}
