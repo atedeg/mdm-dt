@@ -2,9 +2,185 @@
 require its use within the packaging line.</p><p>At present:</p><ul><li>Has no information about the <strong>current batch</strong></li><li>Data produced is not integrated with the company&rsquo;s information system</li></ul><p>With a digital twin we can better integrate the data that the metal detector produce and make it able to easily communicate with the other machines.</p></section><section><h1 id=scale>Scale</h1><p>Just as with the metal detector, the scale is also subject to <em>stringent regulations</em>.
 The measurement of product weight must meet legal parameters outside of which the product cannot be sold.</p><p>At present:</p><ul><li>The scale is <strong>set manually</strong> by the operator</li><li>Simple reports are generated but rarely used</li></ul><p>A digital twin can help integrate such data into the system as well as monitor the weight of the package and <em>detect anomalies</em> in the packaging process.</p></section></section><section><h1 id=supporting-bounded-contexts>Supporting Bounded Contexts</h1><p>Having introduced <em>digital twins</em> we noticed that other subdomains or bounded contexts were
 needed in order to support their functioning. In particular, we identified the following bounded
-contexts:</p><ul><li><strong>Alerts</strong>: manages the alerts sent by the digital twins</li><li><strong>Maintenance</strong>: manages the maintenance of the Packaging Machine digital twin</li><li><strong>Reporting</strong>: manages the reports sent by the Scale and the Metal Detector digital twins</li></ul></section><section><h1 id=digital-twins-interactions>Digital Twins Interactions</h1><figure><img src=img/EventStorming-DT.svg></figure></section><section><h1 id=architecture>Architecture</h1><figure><img src=img/clean-architecture.png></figure></section><section><h1 id=context-map>Context Map</h1><figure><img src=img/context-map.png></figure></section><section><section data-shortcode-section><h1 id=digital-twin-models>Digital Twin Models</h1></section><section><h1 id=milk-tank-model>Milk Tank Model</h1><div class=mermaid>graph LR
-A --> B
-B --> C</div></section></section></div></div><script type=text/javascript src=/mdm-dt/reveal-hugo/object-assign.js></script>
+contexts:</p><ul><li><strong>Alerts</strong>: manages the alerts sent by the digital twins</li><li><strong>Maintenance</strong>: manages the maintenance of the Packaging Machine digital twin</li><li><strong>Reporting</strong>: manages the reports sent by the Scale and the Metal Detector digital twins</li></ul></section><section><h1 id=digital-twins-interactions>Digital Twins Interactions</h1><figure><img src=img/EventStorming-DT.svg></figure></section><section><h1 id=architecture>Architecture</h1><figure><img src=img/clean-architecture.png></figure></section><section><h1 id=context-map>Context Map</h1><figure><img src=img/context-map.png></figure></section><section><section data-shortcode-section><h1 id=digital-twin-models>Digital Twin Models</h1><p>All the models described in the following slides are built using the <em>Web Thing Model</em> specification <a href=https://www.w3.org/Submission/wot-model/>[2]</a>.</p><p>This specification enable the description of a virtual counterpart of a <em>physical object</em> in the <strong>Web of Things</strong>.</p></section><section><h1 id=milk-tank-model>Milk Tank Model</h1><div class=multiCol><div class=col><p>Web Thing Model <em>milk tank</em></p><pre><code class=language-json>{
+  &quot;@context&quot;: ...
+  &quot;@type&quot;: &quot;tm:ThingModel&quot;,
+  &quot;title&quot;: &quot;Milk Tank&quot;,
+  &quot;links&quot;: [
+    {
+      &quot;rel&quot;: &quot;tm:submodel&quot;,
+      &quot;href&quot;: ...,
+      &quot;instanceName&quot;: &quot;pH&quot;
+    },
+    {
+      &quot;rel&quot;: &quot;tm:submodel&quot;,
+      &quot;href&quot;: ...,
+      &quot;instanceName&quot;: &quot;Temperature&quot;
+    }
+  ],
+  &quot;properties&quot;: {
+    &quot;manufacturer&quot;: {...},
+    &quot;serialNo&quot;: {...},
+    &quot;availableMilk&quot;: {...}
+  },
+  &quot;actions&quot;: {
+    &quot;open-valve&quot;: {...}
+  }
+}
+</code></pre></div><div class=col><ul><li><strong><code>manufacturer</code></strong> and <strong><code>serialNo</code></strong> are static properties belonging to the specific machine</li><li><strong><code>availableMilk</code></strong> show in real-time the quantity of milk stocked in the tank</li><li>The <strong><code>open-valve</code></strong> action is use to open or close the valve to start the production</li><li>The model is <em>linked</em> of other two models: <code>pH</code> and <code>Temperature</code></li></ul><p>The complete <em>Web Thing Model</em> is available <a href=https://github.com/atedeg/mdm-dt/blob/main/things-models/milk-tank/milk-tank.tm.jsonld>here</a>.</p></div></div></section><section><h2 id=ph-model>PH model</h2><div class=multiCol><div class=col><p>Web Thing Model <em>pH</em></p><pre><code class=language-json>{
+  &quot;@context&quot;: ...
+  &quot;@type&quot;: &quot;tm:ThingModel&quot;,
+  &quot;properties&quot;: {
+    &quot;pH&quot;: { &quot;type&quot;: &quot;number&quot; },
+    &quot;min-pH&quot;: {
+        &quot;type&quot;: &quot;number&quot;,
+        &quot;minimum&quot;: 0.0 
+    },
+    &quot;max-pH&quot;: {
+        &quot;type&quot;: &quot;number&quot;,
+        &quot;minimum&quot;: 0.0 
+    }
+  },
+  &quot;events&quot;: {
+    &quot;ph-out-of-range&quot;: {
+      &quot;data&quot;: {
+        &quot;@type&quot;: &quot;om2:Quantity&quot;,
+        &quot;type&quot;: &quot;number&quot;,
+        &quot;unit&quot;: &quot;om2:Quantity&quot;,
+        &quot;minimum&quot;: 0.0
+      }
+    }
+  }
+}
+</code></pre></div><div class=col><ul><li>The <strong><code>Ph</code></strong> property shows in real-time the current pH value</li><li>The <strong><code>min-pH</code></strong> property that set the minimum accepted pH value</li><li>The <strong><code>max-pH</code></strong> property that set the maximum accepted pH value</li><li>The <strong><code>ph-out-of-range</code></strong> this event is triggered when the pH is out of range</li></ul><p>The complete <em>Web Thing Model</em> is available <a href=https://github.com/atedeg/mdm-dt/blob/main/things-models/milk-tank/ph.tm.jsonld>here</a>.</p></div></div></section><section><h2 id=temperature-model>Temperature model</h2><div class=multiCol><div class=col><p>Web Thing Model <em>Temperature</em></p><pre><code class=language-json>{
+    &quot;@context&quot;: ...
+    &quot;@type&quot;: &quot;tm:ThingModel&quot;,
+    &quot;properties&quot;: {
+        &quot;temperature&quot;: { &quot;type&quot;: &quot;number&quot; },
+        &quot;min-temp&quot;: { &quot;type&quot;: &quot;number&quot; },
+        &quot;max-temp&quot;: { &quot;type&quot;: &quot;number&quot; }
+    },
+    &quot;events&quot;: {
+        &quot;temperature-out-of-range&quot;: {
+            &quot;title&quot;: &quot;Alarm for temperature out of range&quot;,
+            &quot;data&quot;: {
+                &quot;@type&quot;: &quot;om2:Temperature&quot;,
+                &quot;title&quot;: &quot;Temperature value&quot;,
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;unit&quot;: &quot;om2:CelsiusTemperature&quot;,
+            }   
+        }
+    }
+}
+</code></pre></div><div class=col><ul><li>The <strong><code>temperature</code></strong> property shows in real-time the current temperature value</li><li>The <strong><code>min-temp</code></strong> property that set the minimum accepted temperature value</li><li>The <strong><code>max-temp</code></strong> property that set the maximum accepted temperature value</li><li>The <strong><code>temperature-out-of-range</code></strong> this event is triggered when the temperature is out of range</li></ul><p>The complete <em>Web Thing Model</em> is available <a href=https://github.com/atedeg/mdm-dt/blob/main/things-models/milk-tank/ph.tm.jsonld>here</a>.</p></div></div></section><section><h1 id=packaging-machine-model>Packaging Machine Model</h1><div class=multiCol><div class=col><p>Web Thing Model <em>Packaging Machine</em></p><pre><code class=language-json>{
+    &quot;@context&quot;: ...,
+    &quot;@type&quot;: &quot;tm:ThingModel&quot;,
+    &quot;properties&quot;: {
+      &quot;manufacturer&quot;: {...},
+      &quot;serialNo&quot;: {...},
+      &quot;currentBatch&quot;: {...}
+    },
+    &quot;actions&quot;: {
+        &quot;start-packaging&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;
+        }
+    },
+    &quot;events&quot;: {
+      &quot;packaging-started&quot;: {
+        &quot;data&quot;: {
+          &quot;@type&quot;: &quot;Boolean&quot;,
+          &quot;type&quot;: &quot;boolean&quot;,
+        },
+      },
+      &quot;packagingMachine-failure&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+            &quot;batch-id&quot;: { &quot;type&quot;: &quot;string&quot; },
+            &quot;cutter-temperature&quot;: { &quot;type&quot;: &quot;integer&quot; }
+        }
+      },
+      &quot;package-damaged&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+            &quot;batch-id&quot;: { &quot;type&quot;: &quot;string&quot; },
+            &quot;cutter-temperature&quot;: { &quot;type&quot;: &quot;integer&quot; }
+        }
+      }
+    }
+  }
+</code></pre></div><div class=col><ul><li><strong><code>currentBatch</code></strong> property is set wen a new batch should be packaged</li><li><strong><code>start-packaging</code></strong> is the available action that trigger the start of the packaging process</li><li>The <strong><code>packaging-started</code></strong> event is triggered on the start of the packaging process</li><li>The <strong><code>packagingMachine-failure</code></strong> event is triggered when a failure in the machine occurs</li><li>The <strong><code>package-damaged</code></strong> event is triggered when the machine damage a package during the packaging</li></ul><p>The complete <em>Web Thing Model</em> is available <a href=https://github.com/atedeg/mdm-dt/blob/main/things-models/packaging-machine/packaging-machine.tm.jsonld>here</a>.</p></div></div></section><section><h1 id=metal-detector-model>Metal Detector Model</h1><div class=multiCol><div class=col><p>Web Thing Model <em>Metal Detector</em></p><pre><code class=language-json>{
+  &quot;@context&quot;: [...],
+  &quot;@type&quot;: &quot;tm:ThingModel&quot;,
+  &quot;properties&quot;: {
+    &quot;manufacturer&quot;: {...},
+    &quot;serialNo&quot;: {...},
+    &quot;currentBatch&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    }
+  },
+  &quot;events&quot;: {
+    &quot;dropped-packages&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+          &quot;batch-id&quot;: { &quot;type&quot;: &quot;string&quot; },
+          &quot;dropped-packages&quot;: { &quot;type&quot;: &quot;integer&quot; }
+      }
+    }
+  }
+}
+</code></pre></div><div class=col><ul><li><strong><code>currentBatch</code></strong> property is set wen a new batch should be packaged</li><li>The <strong><code>dropped-packages</code></strong> event is triggered when a package contains a metal debris</li></ul><p>The complete <em>Web Thing Model</em> is available <a href=https://github.com/atedeg/mdm-dt/blob/main/things-models/metal-detector/metal-detector.tm.jsonld>here</a>.</p></div></div></section><section><h1 id=scale-model>Scale Model</h1><div class=multiCol><div class=col><p>Web Thing Model <em>Scale</em></p><pre><code class=language-json>{
+  &quot;@context&quot;: [...],
+  &quot;@type&quot;: &quot;tm:ThingModel&quot;,
+  &quot;properties&quot;: {
+      &quot;manufacturer&quot;: {...},
+      &quot;serialNo&quot;: {...},
+      &quot;currentBatch&quot;: {...},
+      &quot;meanWeight&quot;: {...},
+      &quot;stdDevWeight&quot;: {...}
+  },
+  &quot;events&quot;: {
+    &quot;dropped-packages&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;batch-id&quot;: { &quot;type&quot;: &quot;string&quot; },
+        &quot;dropped-packages&quot;: { &quot;type&quot;: &quot;integer&quot; }
+      }
+    },
+    &quot;batch-completed&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;completed&quot;: { &quot;type&quot;: &quot;boolean&quot; },
+        &quot;batch-id&quot;: { &quot;type&quot;: &quot;string&quot; },
+        &quot;dropped-packages&quot;: { &quot;type&quot;: &quot;integer&quot; }
+      }
+    }
+  }
+}
+</code></pre></div><div class=col><ul><li>The <strong><code>currentBatch</code></strong> property is set wen a new batch should be packaged</li><li>The <strong><code>meanWeight</code></strong> property shows the mean weight for the current batch</li><li>The <strong><code>stdDevWeight</code></strong> property shows the standard deviation of the weight for the current batch</li><li>The <strong><code>dropped-packages</code></strong> event is triggered at the end of the QA process if there are some dropped packages</li><li>The <strong><code>batch-completed</code></strong> event is triggered at the end of the QA process</li></ul><p>The complete <em>Web Thing Model</em> is available <a href=https://github.com/atedeg/mdm-dt/blob/main/things-models/metal-detector/metal-detector.tm.jsonld>here</a>.</p></div></div></section></section><section><section data-shortcode-section><h1 id=development>Development</h1></section><section><h1 id=eclipse-ditto>Eclipse Ditto</h1><p><strong>Ditto</strong> is an open-source technology for building simple digital twins that are mirroring some
+devices.</p><div class=multiCol><div class=col><ul><li><em>Policies:</em> manages persistence and enforcement of Policies</li><li><em>Things:</em> manages persistence and enforcement of Things and Features</li><li><em>Things-Search:</em> that tracks changes to Things, Features, Policies and updates an optimized
+search index</li><li><em>Gateway:</em> that provides HTTP and WebSocket API</li><li><em>Connectivity:</em> manages the persistence of Connections as well as sends Ditto Protocol
+messages to external message brokers and receives messages from them</li></ul></div><div class=col><figure><img src=img/ditto-architecture.png width=70%></figure></div></div></section><section><h1 id=web-of-things-integration>Web Of Things integration</h1><p>From the version <code>2.4.0</code> of Ditto they support the <strong>W3C WoT</strong> specification, so you can declare a digital twin using a <strong>Thing Model</strong>.</p><p>This integration takes a big step forward towards:</p><ul><li>increased <strong>interoperability</strong></li><li><em>introspection</em> of twins to find out their capabilities</li><li>addition of <strong>semantic</strong> context to Ditto managed digital twins and their capabilities</li><li>description of Ditto twin HTTP APIs in an open, established, well specified, &ldquo;web optimized&rdquo;, active IoT standard</li><li>opening the door to a <strong>new ecosystem</strong> of tools</li></ul></section><section><h1 id=ditto-vs-wot>Ditto vs WoT</h1><div class=multiCol><div class=col><h4 id=_thing-level_><em>Thing level</em></h4><table><thead><tr><th><strong>WoT</strong></th><th><strong>Ditto</strong></th></tr></thead><tbody><tr><td><em>Thing</em></td><td>Ditto Thing</td></tr><tr><td><em>Properties</em></td><td>Thing attributes</td></tr><tr><td><em>Actions</em></td><td>Thing messages with Direction to (“inbox”) of a Thing ID.</td></tr><tr><td><em>Events</em></td><td>Thing messages with Direction from (“outbox”) of a Thing ID.</td></tr><tr><td>Composition via <em>tm:submodule</em></td><td>Thing features representing different aspects of a Ditto Thing.</td></tr></tbody></table></div><div class=col><h4 id=_feature-level_><em>Feature level</em></h4><table><thead><tr><th><strong>WoT</strong></th><th><strong>Ditto</strong></th></tr></thead><tbody><tr><td><em>Thing</em></td><td>Feature. In Ditto, a Feature is an aspect of a Ditto Thing.</td></tr><tr><td><em>Properties</em></td><td>Feature properties</td></tr><tr><td><em>Actions</em></td><td>Feature messages with Direction to (“inbox”) of a Thing ID + Feature ID combination.</td></tr><tr><td><em>Events</em></td><td>Feature messages with Direction from (“outbox”) of a Thing ID + Feature ID combination.</td></tr></tbody></table></div></div></section><section><h1 id=implementation>Implementation</h1><p>The code base of the project is written in <em>Scala 3</em> using a <strong>monadic</strong> approach.</p><p>Handler defined in the <strong>Alerts</strong> bounded context:</p><pre><code class=language-scala>def handlePackagingMachineFailureEvent[M[_]: Monad: LiftIO: CanRaise[String]](
+    event: PackagingMachineFailedDTO,
+): M[Unit] =
+    for
+        r &lt;- validate(event)
+        message = managePackagingMachineFailure(PackagingMachineFailure(LocalTime.now(), r.batchID, r.cutterTemperature))
+        _ &lt;- IO.println(&quot;Sending an e-mail to the admin...&quot;).liftIO[M]
+        _ &lt;- sendEmail(message)
+    yield ()
+</code></pre><p>Handler defined in the <strong>Maintenance</strong> bounded context:</p><pre><code class=language-scala>def packagingMachineFailureHandler[M[_]: Monad: LiftIO: CanRaise[String]](
+    failure: PackagingMachineFailureDTO,
+): M[Unit] =
+    for
+        failureEvent &lt;- validate(failure)
+        _ &lt;- collectMachineFailure(failureEvent)
+        _ &lt;- writeFailureToDB(failureEvent)
+    yield ()
+</code></pre></section><section><h1 id=dto>DTO</h1><p>All events are represented with external entities that need to be transformed into <strong>domain entities</strong>.</p><p>This was done by implementing a set of <em>DTOs</em> (Data Transfer Objects) for each event, which is
+used to <em>validate</em> the incoming events and transform them into <em>domain entities.</em></p><p>A code example of the Packaging Machine Failure DTO:</p><pre><code class=language-scala>final case class PackagingMachineMaintenanceDTO(maintenance: String)
+object PackagingMachineMaintenanceDTO:
+  given DTO[PackagingMachineFailure, PackagingMachineFailureDTO] = productTypeDTO
+</code></pre></section></section><section><h1 id=conclusions>Conclusions</h1><ul><li>Use of <strong>DDD</strong> methodologies for <strong>Digital Twin</strong> modelling</li><li>Some limitation are emerged using this approach</li><li>Manage the communication with the digital twin through <strong>DTOs</strong></li><li>Explore the opportunity of <strong>Ditto</strong> + <strong>WoT</strong> (<em>Thing Model</em> )</li><li>Positive feedback from <em>Domain Experts</em></li></ul></section><section><h1 id=future-works>Future Works</h1><ul><li>Some of the code is mocked</li><li>Exploit simulation in order to make a more accurate prediction of the <strong>RUL</strong><ul><li><em>Packaging machine</em> predictive maintenance</li></ul></li></ul></section></div></div><script type=text/javascript src=/mdm-dt/reveal-hugo/object-assign.js></script>
 <a href=/mdm-dt/reveal-js/css/print/ id=print-location style=display:none></a>
 <script type=text/javascript>var printLocationElement=document.getElementById("print-location"),link=document.createElement("link");link.rel="stylesheet",link.type="text/css",link.href=printLocationElement.href+(window.location.search.match(/print-pdf/gi)?"pdf.css":"paper.css"),document.getElementsByTagName("head")[0].appendChild(link)</script><script type=application/json id=reveal-hugo-site-params>{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"900","slide_number":true,"width":"1440"}</script><script type=application/json id=reveal-hugo-page-params>null</script><script src=/mdm-dt/reveal-js/js/reveal.js></script>
 <script type=text/javascript>function camelize(e){return e&&Object.keys(e).forEach(function(t){newK=t.replace(/(_\w)/g,function(e){return e[1].toUpperCase()}),newK!=t&&(e[newK]=e[t],delete e[t])}),e}var revealHugoDefaults={center:!0,controls:!0,history:!0,progress:!0,transition:"slide"},revealHugoSiteParams=JSON.parse(document.getElementById("reveal-hugo-site-params").innerHTML),revealHugoPageParams=JSON.parse(document.getElementById("reveal-hugo-page-params").innerHTML),options=Object.assign({},camelize(revealHugoDefaults),camelize(revealHugoSiteParams),camelize(revealHugoPageParams));Reveal.initialize(options)</script><script type=text/javascript src=/mdm-dt/reveal-js/plugin/markdown/marked.js></script>
