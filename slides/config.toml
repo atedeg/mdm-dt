@@ -1,6 +1,6 @@
 baseURL = 'https://atedeg.dev/mdm-dt/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'MDM Pervasive Computing'
 
 theme = "reveal-hugo"
 
@@ -11,9 +11,13 @@ slide_number = true
 width = "1440"
 height = "900"
 
+[markup.highlight]
+codeFences = false
+style = "github"
+
 [params.reveal_hugo.custom_theme_options]
-  targetPath = "css/custom-theme.css"
-  enableSourceMap = true
+targetPath = "css/custom-theme.css"
+enableSourceMap = true
 
 [markup.goldmark.renderer]
 unsafe = true

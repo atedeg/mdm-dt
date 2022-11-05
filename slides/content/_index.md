@@ -40,28 +40,24 @@ The project models the business processes of the _Mambelli_ cheese factory so th
 
 One of the main problems in the industry is the lack of interoperability between different machines and systems.
 
-{{< container >}}
+{{% container %}}
 
-{{< column >}}
+{{% column %}}
 
-<ul>
-<li>Different manufacturers creates their own <b>protocols</b> and <b>formats</b></li>
-<li>Interoperability and integration occurs via an <b>agreements</b> between the different parties</li>
-<li>The <b>interoperability</b> problem is not perceived as a problem by the entrepreneur</li>
-</ul>
+- Different manufacturers creates their own **protocols** and **formats**
+- Interoperability and integration occurs via an **agreements** between the different parties
+- The **interoperability** problem is not perceived as a problem by the entrepreneur
 
-<p>
-The <b>Industry 4.0</b> try to arginate this problem forcing the companies to reach a certain degree of integration and interoperability.
-</p>
+The **Industry 4.0** try to arginate this problem forcing the companies to reach a certain degree of integration and interoperability.
 
-{{< /column >}}
-{{< column >}}
+{{% /column %}}
+{{% column %}}
 
 {{< figure src="img/interoperability.png" caption="Interoperability attention in industrial sectors. [[1]](https://www.sciencedirect.com/science/article/pii/S2405896317317615)" >}}
 
-{{< /column >}}
+{{% /column %}}
 
-{{< /container >}}
+{{% /container %}}
 
 ---
 {{% section %}}
@@ -204,3 +200,21 @@ contexts:
 # Context Map
 
 {{< figure src="img/context-map.png" >}}
+
+---
+
+{{% section %}}
+
+# Digital Twin Models
+
+---
+
+# Milk Tank Model
+
+{{< mermaid >}}
+graph LR
+    A --> B
+    B --> C
+{{< /mermaid >}}
+
+{{% /section %}}
