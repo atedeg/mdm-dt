@@ -42,8 +42,8 @@ $heading4Size: 1.0em;
     width: 100%;
 }
 
-.miraImg {
-    height: 800px;
+div.mermaid {
+    font-family: 'Inter', verdana, arial;
 }
 
 .multiCol {
@@ -79,11 +79,6 @@ $heading4Size: 1.0em;
 .reveal section img {
     border: 0em;
     box-shadow: none;
-}
-
-.label foreignObject {
-    font-size: 60%;
-    overflow: visible;
 }
 
 .mermaid svg {

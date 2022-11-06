@@ -5,7 +5,7 @@ outputs = ["Reveal"]
 
 # About this project
 
-We decided to model the domain og the _Mambelli_ cheese factory:  
+We decided to model the domain of the _Mambelli_ cheese factory:  
 a small family business that produces and sells cheese.
 
 We choose this domain because:
