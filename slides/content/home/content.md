@@ -462,10 +462,10 @@ The _Packaging Machine_ has interactions with the **Alarm**, **Report** and **Ma
 
 {{< mermaid >}}
 graph TD
-  dt([Milk Tank\nDigital Twin]) == "ph-out-of-range" ==> alarm_bc[Alarm\nBounded Context]
+  dt([Packaging Machine\nDigital Twin]) == "packagingMachine-failure" ==> alarm_bc[Alarm\nBounded Context]
+  dt == "package-damaged" ==> alarm_bc
+  dt == "packaging-started" ==> stocking_bc([Stocking\nBounded Context])
   dt == "temperature-out-of-range" ==> alarm_bc
-  dt -.. availableMilk .- milk_planning_bc[Milk Planning\nBounded Context]
-  prod[Production\nBounded Context] -..-> dt
 {{< /mermaid >}}
 {{% /column %}}
 {{% /container %}}
