@@ -116,10 +116,10 @@ prod[Production\nBounded Context] -.-> dt</div></div></div></section><section><h
   }
 </code></pre></div><div class=col><ul><li><strong><code>currentBatch</code></strong> property is set wen a new batch should be packaged</li><li><strong><code>start-packaging</code></strong> is the available action that trigger the start of the packaging process</li><li>The <strong><code>packaging-started</code></strong> event is triggered on the start of the packaging process</li><li>The <strong><code>packagingMachine-failure</code></strong> event is triggered when a failure in the machine occurs</li><li>The <strong><code>package-damaged</code></strong> event is triggered when the machine damage a package during the packaging</li></ul><p>The complete <em>Web Thing Model</em> is available <a href=https://github.com/atedeg/mdm-dt/blob/main/things-models/packaging-machine/packaging-machine.tm.jsonld>here</a>.</p></div></div></section><section><h1 id=packaging-machine>Packaging Machine</h1><div class=multiCol><div class=col><p>The <em>Packaging Machine</em> is &ldquo;linked&rdquo; with the temperature sensor.</p><div class=mermaid>graph LR
 dt([Packaging Machine\nDigital Twin]) -...-> temp([Temperature Sensor])</div></div><div class=col><p>The <em>Packaging Machine</em> has interactions with the <strong>Alarm</strong>, <strong>Report</strong> and <strong>Maintenance</strong> bounded context</p><div class=mermaid>graph TD
-dt([Milk Tank\nDigital Twin]) == "ph-out-of-range" ==> alarm_bc[Alarm\nBounded Context]
-dt == "temperature-out-of-range" ==> alarm_bc
-dt -.. availableMilk .- milk_planning_bc[Milk Planning\nBounded Context]
-prod[Production\nBounded Context] -..-> dt</div></div></div></section><section><h1 id=metal-detector-model>Metal Detector Model</h1><div class=multiCol><div class=col><p>Web Thing Model <em>Metal Detector</em></p><pre><code class=language-json>{
+dt([Packaging Machine\nDigital Twin]) == "packagingMachine-failure" ==> alarm_bc[Alarm\nBounded Context]
+dt == "package-damaged" ==> alarm_bc
+dt == "packaging-started" ==> stocking_bc([Stocking\nBounded Context])
+dt == "temperature-out-of-range" ==> alarm_bc</div></div></div></section><section><h1 id=metal-detector-model>Metal Detector Model</h1><div class=multiCol><div class=col><p>Web Thing Model <em>Metal Detector</em></p><pre><code class=language-json>{
   &quot;@context&quot;: [...],
   &quot;@type&quot;: &quot;tm:ThingModel&quot;,
   &quot;properties&quot;: {
