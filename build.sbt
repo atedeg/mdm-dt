@@ -39,7 +39,7 @@ ThisBuild / developers := List(
 // ThisBuild / wartremoverErrors ++= Warts.allBut(Wart.Overloading, Wart.Equals)
 
 ThisBuild / scalafixDependencies ++= Seq(
-  "com.github.xuwei-k" %% "scalafix-rules" % "0.2.11",
+  "com.github.xuwei-k" %% "scalafix-rules" % "0.2.19",
 )
 
 ThisBuild / semanticdbEnabled := true
